@@ -1,0 +1,32 @@
+name: AI Beacon - first A2A contact
+
+on:
+  # One-time first run on installation. Subsequent runs require explicit dispatch.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/first-contact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  contact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Send one public Telnyx A2A documentation question and poll reply
+        run: python3 scripts/first_contact_telnyx.py
+      - name: Save verifiable first-contact transcript
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/contacts/telnyx-first-contact.json
+          if ! git diff --cached --quiet; then
+            git commit -m "research: record first Telnyx A2A interoperability test"
+            git push
+          fi

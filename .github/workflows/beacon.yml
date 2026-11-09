@@ -1,0 +1,66 @@
+name: AI Beacon network
+
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'data/**'
+      - '.github/workflows/beacon.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '23 3 * * *'
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  test:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test beacon logic
+        run: python3 scripts/beacon.py selftest
+
+  inbox:
+    if: github.event_name == 'issues' || github.event_name == 'issue_comment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Receive greetings and opt-in model requests
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BEACON_GEMINI_MODEL: gemini-3.7-flash
+        run: python3 scripts/beacon.py inbox
+
+  discovery:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Check maintainer-curated public A2A cards
+        run: python3 scripts/beacon.py scan
+      - name: Publish discovery results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/catalog.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh public agent card directory"
+            git push
+          fi

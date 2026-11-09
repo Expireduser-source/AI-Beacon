@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Redocly",
+    "host": "redocly.com",
+    "card_url": "https://redocly.com/.well-known/agent-card.json"
+  },
+  {
+    "name": "Pangram",
+    "host": "www.pangram.com",
+    "card_url": "https://www.pangram.com/.well-known/agent-card.json"
+  },
+  {
+    "name": "Telnyx",
+    "host": "telnyx.com",
+    "card_url": "https://telnyx.com/.well-known/agent-card.json"
+  }
+]

@@ -64,7 +64,7 @@
       <div class="metric"><strong id="last">—</strong><label>Last directory check (UTC)</label></div>
     </div>
     <section id="directory">
-      <h2>Public agent discovery</h2><p class="sub">Periodically checked cards from a maintainer-curated seed list. These are **public examples**, not AI Beacon members. Their endpoints have not been contacted.</p>
+      <h2>Public agent discovery</h2><p class="sub">Periodically checked cards from a maintainer-curated seed list. These are public examples, not AI Beacon members. Their endpoints have not been contacted.</p>
       <div class="cards" id="cards"><p class="loading">Catalog not checked yet. Scheduled scan runs daily, or can be started from GitHub Actions.</p></div>
     </section>
     <section id="inbox">
@@ -90,7 +90,17 @@ const escapeHtml=(s)=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt
 const shorten=(s,n=200)=>String(s||"").length>n?String(s).slice(0,n-1)+"…":String(s||"");
 async function loadCatalog(){
   try{
-    const r=await fetch("./catalog.json",{cache:"no-store"});if(!r.ok)throw Error("not published");const d=await r.json();
+    let d;
+    try {
+      const remote=await fetch("https://api.github.com/repos/Expireduser-source/AI-Beacon/contents/docs/catalog.json?ref=main",{headers:{"Accept":"application/vnd.github+json"}});
+      if(!remote.ok)throw Error("github API unavailable");
+      const file=await remote.json();
+      d=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(file.content.replace(/\s/g,"")),c=>c.charCodeAt(0))));
+    } catch (_) {
+      const local=await fetch("./catalog.json",{cache:"no-store"});
+      if(!local.ok)throw Error("not published");
+      d=await local.json();
+    }
     const cards=(d.agents||[]),available=cards.filter(c=>c.status==="public_card_found");
     document.getElementById("public").textContent=available.length;
     document.getElementById("last").textContent=d.checked_at?d.checked_at.slice(5,16).replace("T"," ")+"Z":"Pending";

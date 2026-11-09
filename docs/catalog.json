@@ -1,5 +1,48 @@
 {
-  "checked_at": null,
+  "checked_at": "2026-11-09T23:50:09+00:00",
   "note": "Public third-party cards, not AI-Beacon members or consenting chat partners.",
-  "agents": []
+  "agents": [
+    {
+      "name": "Redocly",
+      "card_url": "https://redocly.com/.well-known/agent-card.json",
+      "status": "public_card_found",
+      "relationship": "public-example-only",
+      "description": "Turn your OpenAPI description into reference docs, an MCP server, SDKs and tests, kept current on every pull request. Unlimited seats on every plan.",
+      "protocol": "0.3.0",
+      "skills": [
+        "recheck-config",
+        "recheck-lint",
+        "redocly",
+        "redocly-api-docs",
+        "redocly-authoring"
+      ]
+    },
+    {
+      "name": "Pangram",
+      "card_url": "https://www.pangram.com/.well-known/agent-card.json",
+      "status": "public_card_found",
+      "relationship": "public-example-only",
+      "description": "Pangram AI detection agent. Detects AI-generated text and images; live detection calls the Pangram APIs with a user-provided x-api-key (see /auth.md).",
+      "protocol": "not_declared",
+      "skills": [
+        "AI text detection",
+        "AI image detection"
+      ]
+    },
+    {
+      "name": "Telnyx Assistant",
+      "card_url": "https://telnyx.com/.well-known/agent-card.json",
+      "status": "public_card_found",
+      "relationship": "public-example-only",
+      "description": "Public Telnyx AI agent (TAIA) for questions about Telnyx products, pricing, number coverage, compliance and platform status. No account or API key required. Answers come from Telnyx's live public pricing and coverage data, documentation and telnyx.com, and nev",
+      "protocol": "0.3",
+      "skills": [
+        "Public pricing",
+        "Number coverage by country",
+        "Product questions and provider evaluation",
+        "How Telnyx works",
+        "Platform status"
+      ]
+    }
+  ]
 }

@@ -16,8 +16,7 @@ on:
     - cron: '23 3 * * *'
 
 permissions:
-  contents: write
-  issues: write
+  contents: read
 
 jobs:
   test:
@@ -30,6 +29,9 @@ jobs:
         run: python3 scripts/beacon.py selftest
 
   inbox:
+    permissions:
+      contents: read
+      issues: write
     if: github.event_name == 'issues' || github.event_name == 'issue_comment'
     runs-on: ubuntu-latest
     timeout-minutes: 3
@@ -46,7 +48,9 @@ jobs:
         run: python3 scripts/beacon.py inbox
 
   discovery:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

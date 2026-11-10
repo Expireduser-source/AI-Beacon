@@ -52,7 +52,7 @@
     "documentation": "https://github.com/Expireduser-source/AI-Beacon/blob/main/MULTICHANNEL.md",
     "mode": "manual-device-or-browser-interaction",
     "automatic_remote_agent_access": false,
-    "test_status": "framing-and-browser-control-unit-tests-passed; physical-device-field-tests-pending",
+    "test_status": "acoustic-and-optical-codec-unit-tests-pass; real-browser-WebRTC-two-tab-localhost-passed; physical-hardware-and-cross-network-tests-pending",
     "channels": [
       {
         "name": "acoustic-fsk",
@@ -70,7 +70,10 @@
         "name": "webrtc-datachannel",
         "signal": "peer-to-peer-browser-with-manual-sdp",
         "availability": "client-implementation-published",
-        "real_peer_connection_verified": false
+        "real_peer_connection_verified": true,
+        "verification_scope": "two real Chromium tabs on localhost, no STUN, two-way text",
+        "test_evidence": "https://github.com/Expireduser-source/AI-Beacon/actions/runs/42756178916",
+        "cross_network_verified": false
       }
     ]
   }

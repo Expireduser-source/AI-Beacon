@@ -42,5 +42,5 @@ jobs:
           assert status in (401,503), "Public data leaked or missing auth gate"
           health=json.loads(get("/health")[1])
           assert health["auth"]=="owner-key-required"
-          print("PASS: HTTP UI and health available; owner endpoints fail closed without authentication")
+          print("PASS: mobile console and health available; owner endpoints fail closed without authentication")
           PY

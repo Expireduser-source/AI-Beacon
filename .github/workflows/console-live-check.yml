@@ -35,6 +35,7 @@ jobs:
               status,body=get(path)
               print(path,"status",status,"body_length",len(body))
               if status != 200:
+                  print("Response excerpt:",body[:260])
                   raise SystemExit("Unexpected public route status: "+path)
           status,body=get("/api/status")
           print("/api/status anonymous status",status)

@@ -69,21 +69,23 @@ footer{color:var(--muted);font-size:12px;margin-top:27px}
   <section id="login">
     <h2>Вход владельца</h2>
     <p class="muted">Введи личный ключ AI-Beacon Console. После входа браузер сохранит защищённую сессию на 7 дней. Ключ не сохраняется в истории страницы или localStorage и не публикуется в GitHub.</p>
-    <form id="login-form">
+    <form id="login-form" novalidate>
       <label for="key">Личный ключ доступа</label>
-      <input id="key" type="password" autocomplete="off" spellcheck="false" required minlength="25" placeholder="Вставь ключ из нашего чата">
+      <input id="key" type="password" autocomplete="off" spellcheck="false" required minlength="25" placeholder="Ключ, сохранённый в Cloudflare">
       <div class="actions"><button class="primary" type="submit" id="unlock">Открыть пульт</button></div>
     </form>
-    <details style="margin-top:18px;border-top:1px solid var(--line);padding-top:15px">
+    <div id="auth-state" role="status" aria-live="polite" style="margin:10px 0 15px;padding:12px;border:1px solid #365a67;border-radius:10px;background:#102d40;color:#d1ecfc">Проверяю состояние доступа…</div>
+    <p class="muted">После вставки ключа обязательно нажми <strong>«Открыть пульт»</strong>. Если ключ неверный, ошибка появится прямо здесь.</p>
+    <details style="margin-top:12px;border-top:1px solid var(--line);padding-top:15px">
       <summary style="cursor:pointer;font-weight:760;color:var(--blue)">Первичная настройка ключа на телефоне</summary>
-      <p class="muted">Эту настройку нужно выполнить только один раз. Случайный ключ создаётся браузером, не отправляется на GitHub и не хранится в localStorage.</p>
+      <p class="muted">Эту настройку нужно выполнить только один раз. Случайный ключ создаётся браузером, не отправляется на GitHub и не хранится в localStorage. <strong>Если ключ уже сохранён в Cloudflare, не генерируй новый — введи тот же самый.</strong></p>
       <div class="actions"><button type="button" id="generate-key">Создать личный ключ локально</button><button type="button" id="copy-generated" disabled>Копировать ключ</button></div>
       <label for="generated-key">Твой новый ключ (сохрани в менеджере паролей)</label>
       <input id="generated-key" type="text" readonly spellcheck="false" autocomplete="off" placeholder="Нажми «Создать личный ключ»">
-      <p class="muted">Затем открой <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Dashboard ↗</a> → <strong>Workers &amp; Pages</strong> → <strong>ai-beacon-control</strong> → <strong>Settings</strong> → <strong>Variables and Secrets</strong>. Добавь секрет с именем <code>CONSOLE_KEY</code> и вставь его значение. После сохранения вернись сюда и введи тот же ключ для входа.</p>
+      <p class="muted">Затем открой <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Dashboard ↗</a> → <strong>Workers &amp; Pages</strong> → <strong>ai-beacon-control</strong> → <strong>Settings</strong> → <strong>Variables and Secrets</strong>. Добавь переменную с именем <code>CONSOLE_KEY</code>, обязательно выбери тип <strong>Secret</strong> (не Text), и вставь её значение. Если CONSOLE_KEY уже создан как Text, замени его секретом с тем же значением. После сохранения вернись сюда и введи тот же ключ для входа.</p>
       <p class="small">Важно: не публикуй секрет в GitHub, не вставляй в A2A-сообщения и не показывай другим пользователям.</p>
     </details>
-    <div id="auth-state" role="status">Проверяю состояние доступа…</div>
+
   </section>
   <section id="console" hidden>
     <div class="top" style="padding:0 0 12px">

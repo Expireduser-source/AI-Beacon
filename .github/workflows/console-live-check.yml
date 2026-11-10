@@ -42,5 +42,11 @@ jobs:
           assert status in (401,503), "Public data leaked or missing auth gate"
           health=json.loads(get("/health")[1])
           assert health["auth"]=="owner-key-required"
-          print("PASS: mobile console and health available; owner endpoints fail closed without authentication")
+          assert health.get("storage")=="ok", "Durable Object unavailable in production"
+          assert "Проверить соединение бесплатно" in get("/")[1], "New controls not yet published"
+          assert "/api/preflight" in get("/app.js")[1], "New mobile diagnostics code not yet published"
+          status,body=get("/api/preflight")
+          assert status==401, "Preflight must be private"
+          print("PASS: live Cloudflare Durable Object, mobile stage controls and protected owner-only diagnostics")
+          print("PASS: anonymous model-control requests are rejected; no paid inference in smoke test")
           PY

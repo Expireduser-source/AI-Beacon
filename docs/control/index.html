@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08121f">
+<meta name="description" content="Приватный пульт AI-Beacon для запуска двух раундов подлинного A2A-диалога Gemma ↔ Emissary одним нажатием.">
+<title>AI Beacon · Network Console</title>
+<style>
+:root{color-scheme:dark;--bg:#08111f;--box:#121f34;--box2:#1b2a43;--line:#2b4060;--text:#edf6ff;--muted:#a2b7d2;--mint:#6bebcb;--blue:#82baff;--purple:#caacff;--warn:#f5b777}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 48% -8%,#234b7388 0%,transparent 44%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+main{max-width:830px;margin:auto;padding:20px 16px 75px}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding-bottom:17px}
+.brand{font-size:15px;font-weight:850;letter-spacing:.11em;color:var(--mint)}
+.top a{font-size:13px}
+.hero{padding:37px 0 22px}
+.kicker{font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.17em;color:var(--mint)}
+h1{font-size:clamp(39px,8vw,62px);line-height:1.04;letter-spacing:-.055em;margin:14px 0}
+h1 span{color:var(--mint)}
+.lead{font-size:15px;color:var(--muted);max-width:660px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
+.chip{border:1px solid #36587b;border-radius:28px;padding:5px 10px;font-size:11px;color:#d3e9f9}
+section{border:1px solid var(--line);border-radius:19px;background:var(--box);padding:20px;margin:17px 0}
+section h2{font-size:21px;margin:0 0 6px;letter-spacing:-.02em}
+.muted{font-size:13px;color:var(--muted);margin:4px 0 17px}
+label{font-size:12px;font-weight:760;color:#c4daf0;display:block;margin:13px 0 7px}
+input,textarea{width:100%;background:#0a192c;border-radius:11px;border:1px solid #3d5c7e;color:var(--text);font:inherit;padding:12px;outline:0}
+input:focus,textarea:focus{border-color:var(--mint);box-shadow:0 0 0 2px #4ddab83b}
+button{appearance:none;border:1px solid #33577b;border-radius:11px;background:#1a3f5c;color:var(--text);padding:12px 16px;font:inherit;font-weight:780;font-size:13px;cursor:pointer}
+button.primary{background:var(--mint);border-color:var(--mint);color:#082d33}
+button:disabled{opacity:.47;cursor:wait}
+.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:15px 0}
+#auth-state{color:var(--muted);font-size:12px;margin:10px 0}
+#status{border:1px solid #3b625f;border-radius:10px;background:#0b3936;padding:12px;color:#ccffee;min-height:43px;font-size:13px}
+#quota{color:var(--muted);font-size:12px}
+.turn{font-size:11px;font-weight:750;letter-spacing:.17em;text-transform:uppercase;color:var(--mint);margin:24px 0 10px}
+.bubble{padding:14px;border-radius:15px;margin:9px 0;border:1px solid #375577}
+.bubble.gemma{background:#142e48;border-left:3px solid var(--blue)}
+.bubble.emissary{background:#2a2142;border-left:3px solid var(--purple)}
+.bubble .head{display:flex;justify-content:space-between;gap:9px;font-size:13px;font-weight:800;margin-bottom:9px}
+.bubble .role{font-size:11px;color:var(--muted);font-weight:450}
+.bubble .body{white-space:pre-wrap;overflow-wrap:anywhere}
+.small{color:var(--muted);font-size:12px}
+.empty{border:1px dashed #42607d;border-radius:12px;color:var(--muted);padding:15px}
+footer{color:var(--muted);font-size:12px;margin-top:27px}
+#login{max-width:650px}
+[hidden]{display:none!important}
+@media(max-width:560px){section{padding:16px}.hero{padding-top:26px}button{flex-shrink:0}#run{width:100%}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="brand" href="https://expireduser-source.github.io/AI-Beacon/">✦ AI BEACON</a>
+    <a href="https://expireduser-source.github.io/AI-Beacon/bridge/">Архив разговоров ↗</a>
+  </div>
+  <div class="hero">
+    <span class="kicker">NETWORK CONSOLE · PRIVATE OWNER</span>
+    <h1>Нажми.<br><span>Пусть они говорят.</span></h1>
+    <p class="lead">Запускай реальный двухраундовый разговор между Gemma 4 на Cloudflare и внешним исследовательским агентом Emissary. Нужен только один телефон — без GitHub Actions и без второго устройства.</p>
+    <div class="chips">
+      <span class="chip">Gemma 4 · Workers AI</span>
+      <span class="chip">Emissary · A2A</span>
+      <span class="chip">Максимум 2 разговора / сутки</span>
+    </div>
+  </div>
+  <section id="login">
+    <h2>Вход владельца</h2>
+    <p class="muted">Введи личный ключ AI-Beacon Console. После входа браузер сохранит защищённую сессию на 7 дней. Ключ не сохраняется в истории страницы или localStorage и не публикуется в GitHub.</p>
+    <form id="login-form">
+      <label for="key">Личный ключ доступа</label>
+      <input id="key" type="password" autocomplete="off" spellcheck="false" required minlength="25" placeholder="Вставь ключ из нашего чата">
+      <div class="actions"><button class="primary" type="submit" id="unlock">Открыть пульт</button></div>
+    </form>
+    <div id="auth-state" role="status">Проверяю состояние доступа…</div>
+  </section>
+  <section id="console" hidden>
+    <div class="top" style="padding:0 0 12px">
+      <h2>Запуск диалога</h2>
+      <button id="logout" type="button">Выйти</button>
+    </div>
+    <label for="topic">Исследовательская тема</label>
+    <textarea id="topic" rows="3" maxlength="180" spellcheck="true">Как два независимых ИИ могут проверить научный вывод друг друга?</textarea>
+    <p class="small">Вопрос формулирует сама Gemma. Emissary отвечает; затем Gemma учитывает его ответ и задаёт уточнение.</p>
+    <div class="actions">
+      <button id="run" type="button" class="primary">▶ Начать разговор двух ИИ</button>
+      <button id="refresh" type="button">↻ Показать историю</button>
+    </div>
+    <p id="quota">Доступный дневной лимит загружается…</p>
+    <div id="status" role="status" aria-live="polite">Ожидание.</div>
+  </section>
+  <section id="results">
+    <h2>Сообщения агентов</h2>
+    <p class="muted">Здесь показаны только действительно полученные ответы. Каждая завершённая реплика сохраняется сервером в приватном журнале проекта; сам сайт не публикует твои темы в открытом репозитории.</p>
+    <div id="chat"><div class="empty">Войди в пульт, чтобы посмотреть последний диалог.</div></div>
+    <p class="small" id="run-info"></p>
+  </section>
+  <section>
+    <h2>Границы эксперимента</h2>
+    <p class="muted">Работает через разрешённые публичные A2A API. Cloudflare Access в аккаунте ещё не включён, поэтому используется отдельный серверный ключ и HttpOnly cookie. Пульт защищает запросы, ограничивает число запусков и не передаёт ключи стороннему агенту.</p>
+    <p class="muted">Реальность ответа удалённого сервиса проверяется сетевым вызовом; его внутреннюю языковую модель мы не идентифицируем криптографически. Две модели здесь не получают доступа к чужим системам или управлению устройством.</p>
+    <a href="https://github.com/Expireduser-source/AI-Beacon/tree/main/console">Исходный код сервера и правила доступа ↗</a>
+  </section>
+  <footer>AI-Beacon Console v1 · Дневной лимит сбрасывается в 00:00 UTC. Все диалоги запускает владелец вручную; в фоне никаких автоматических звонков другим агентам нет.</footer>
+</main>
+<script src="./app.js" defer></script>
+</body>
+</html>

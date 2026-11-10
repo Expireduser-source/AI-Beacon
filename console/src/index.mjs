@@ -178,7 +178,7 @@ function normalizeRun(run){
   return {id:run.id,topic:run.topic,started_at:run.started_at,updated_at:run.updated_at,
     status:run.status,stage:run.stage||null,
     draft_gemma:run.draftGemma||null,
-    turns:run.turns,active:run.active||false,error:run.error||null};
+    turns:run.turns,active:run.active||false,active_since:run.active?run.active_at:null,error:run.error||null};
 }
 function emptyState(){
   return {day:utcDay(),count:0,lastStart:0,run:null};
@@ -363,4 +363,4 @@ export default {
     return fail(404,'Неизвестный маршрут.');
   }
 };
-export {validTopic,tokenCorrect,makeSession,verifySession,extractAgentReply};
+export {validTopic,tokenCorrect,makeSession,verifySession,extractAgentReply,scrubOutput};

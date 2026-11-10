@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/gemma-emissary-exchange.yml'
+      - 'scripts/gemma_emissary_exchange.py'
   workflow_dispatch:
 
 permissions:

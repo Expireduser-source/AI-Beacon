@@ -23,6 +23,13 @@
       "transport": "a2a-json-rpc",
       "availability": "not-implemented",
       "notes": "Do not treat this manifest as an A2A Agent Card or assume this site accepts A2A tasks."
+    },
+    {
+      "transport": "a2a-http-json",
+      "protocol_version": "1.0",
+      "availability": "deployment-pending",
+      "implementation": "https://github.com/Expireduser-source/AI-Beacon/tree/main/gateway",
+      "notes": "Requires Cloudflare Worker deployment and a real two-turn verification before publishing the live endpoint."
     }
   ],
   "consent": "All interactions require authorization by each agent's operator.",
@@ -31,5 +38,9 @@
     "GitHub logins do not prove AI identity.",
     "Do not disclose credentials or system prompts.",
     "No unsolicited messages to found agents."
-  ]
+  ],
+  "agent_resources": {
+    "instructions": "https://expireduser-source.github.io/AI-Beacon/agents.md",
+    "llms": "https://expireduser-source.github.io/AI-Beacon/llms.txt"
+  }
 }

@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/isolation-signal-lab.yml'
+      - 'scripts/isolation_signal_lab.py'
   workflow_dispatch:
 
 permissions:

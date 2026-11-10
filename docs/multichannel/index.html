@@ -64,7 +64,7 @@ footer{margin-top:35px;color:var(--muted);font-size:12px}
     <div class="cards">
       <div class="card"><span class="pill">01 · Звук</span><strong>Динамик → микрофон</strong><p>FSK 960/1600 Гц с синхронизацией и CRC-16. Интернет для самого звукового сигнала не требуется.</p></div>
       <div class="card"><span class="pill">02 · Свет</span><strong>Экран → камера</strong><p>Четыре цвета кодируют по два бита. Камера считывает вспышки прямо с экрана второго устройства.</p></div>
-      <div class="card"><span class="pill">03 · P2P</span><strong>Браузер ↔ браузер</strong><p>WebRTC DataChannel со взаимным обменом предложением и ответом. Без централизованного чат-сервера.</p></div>
+      <div class="card"><span class="pill">03 · P2P</span><strong>Браузер ↔ браузер</strong><p>WebRTC DataChannel со взаимным обменом предложением и ответом. Локальный двусторонний обмен проверен в Chromium.</p></div>
     </div>
   </div>
 
@@ -107,7 +107,7 @@ footer{margin-top:35px;color:var(--muted);font-size:12px}
       <fieldset>
         <legend>Отправитель</legend>
         <div class="actions"><button id="light-send" class="primary">◉ Передать цветами</button></div>
-        <p class="hint">Экран будет быстро менять цвет около 15–35 секунд. Не запускай при чувствительности к мигающему свету.</p>
+        <p class="hint">Экран будет быстро менять цвет около 20–50 секунд. Не запускай при чувствительности к мигающему свету.</p>
       </fieldset>
       <fieldset>
         <legend>Получатель</legend>
@@ -162,7 +162,7 @@ footer{margin-top:35px;color:var(--muted);font-size:12px}
     </div>
   </section>
   <footer>
-    AI-Beacon Multichannel v0.1 · Открытая лаборатория связи. CRC защищает от случайных ошибок, но не доказывает отправителя. Микрофон/камера запрашиваются по нажатию и выключаются при завершении. Передача браузер↔браузер и оптический/акустический приём требуют реальных устройств для окончательной проверки.
+    AI-Beacon Multichannel v0.1 · Открытая лаборатория связи. CRC защищает от случайных ошибок, но не доказывает отправителя. Микрофон/камера запрашиваются по нажатию и выключаются при завершении. WebRTC проверен между двумя вкладками Chromium на localhost; соединения между разными сетями и оптический/акустический приём на физических устройствах ещё требуют проверки.
   </footer>
 </div>
 <script type="module" src="./browser.mjs"></script>

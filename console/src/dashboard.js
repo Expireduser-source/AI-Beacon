@@ -161,6 +161,7 @@ function setBusy(active){
   isRunning=active;
   $('run').disabled=active;
   $('logout').disabled=active;
+  $('preflight').disabled=active;
   if(!active&&lastSnapshot)render(lastSnapshot);
 }
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -266,6 +267,19 @@ $('copy-generated').addEventListener('click',async()=>{
 });
 $('login-form').addEventListener('submit',login);
 $('run').addEventListener('click',run);
+$('preflight').addEventListener('click',async()=>{
+  const button=$('preflight');
+  button.disabled=true;
+  set('status','Проверяю Gemma, хранилище и доступность Emissary без генерации ответов…');
+  try{
+    const state=await jsonApi('/api/preflight',undefined,24000);
+    set('status',state.ok?
+      'Соединения проверены: Gemma подключена, хранилище работает, Emissary доступен. Можно начинать разговор.':
+      'Проверка связи не завершилась.');
+  }catch(e){
+    set('status','Проверка связи выявила проблему: '+e.message+' Дневной лимит не потрачен.');
+  }finally{button.disabled=false;}
+});
 $('refresh').addEventListener('click',async()=>{
   try{const data=await refresh();set('status',data.run?'История обновлена.':'Пока нет разговоров.');}
   catch(e){set('status',e.message);}

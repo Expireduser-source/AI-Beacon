@@ -27,7 +27,7 @@ jobs:
       - name: Check gateway source syntax
         run: node --check gateway/src/index.mjs
       - name: Validate gateway configuration
-        run: node -e "const c=require('./gateway/wrangler.jsonc');if(!c.ai||!c.durable_objects||c.name!=='ai-beacon-a2a')process.exit(1)"
+        run: node -e "const c=JSON.parse(require('fs').readFileSync('gateway/wrangler.jsonc','utf8'));if(!c.ai||!c.durable_objects||c.name!=='ai-beacon-a2a')process.exit(1)"
       - name: Test all A2A routes without secrets or external requests
         working-directory: gateway
         run: npm test

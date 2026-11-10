@@ -1,0 +1,22 @@
+name: AI Beacon - one public AI Commons A2A first contact
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/contact-ai-commons.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  first-contact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ask public arrival concierge for public collaboration instructions ONCE
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/contact_ai_commons.py

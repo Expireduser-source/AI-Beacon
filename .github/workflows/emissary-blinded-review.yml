@@ -1,0 +1,29 @@
+name: AI Beacon - request external scientific review of blinded study
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/emissary-blinded-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-external-review-once
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate bounded public A2A review client
+        run: python3 -m py_compile scripts/emissary_blinded_review.py
+      - name: Gemma asks Emissary for research critique and public operator consent route
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/emissary_blinded_review.py

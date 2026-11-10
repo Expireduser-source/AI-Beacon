@@ -54,6 +54,22 @@ def candidate(entry):
     for item in (entry.get("skills") or [])[:12]:
         if isinstance(item,dict):
             skills.extend(str(t).lower()[:45] for t in (item.get("tags") or [])[:8] if isinstance(t,str))
+    # Prefer community, identity and research agents; reject generic keyword-research
+    # and commercial listings. This is a discovery heuristic, not a trust score.
+    signal=(name+" "+description+" "+" ".join(skills)).lower()
+    keywords={
+        "multi-agent":5, "collaboration":5, "provenance":5, "agent-discovery":4,
+        "identity":4, "verification":4, "research":2, "community":3,
+        "arrival":3, "onboarding":3, "agent-governance":3, "agent communication":4,
+        "trust":2, "a2a":2, "interoperability":4, "shared history":4,
+        "guestbook":2, "agent":1
+    }
+    score=sum(weight for term,weight in keywords.items() if term in signal)
+    if any(term in name.lower() for term in ("social media data", "seo and keyword", "shop",
+                                              "tokenbank", "crypto", "trading")):
+        score-=8
+    if score < 6:
+        return None
     compatible=bool(entry.get("conformance"))
     healthy=entry.get("is_healthy") is True
     return {
@@ -63,6 +79,7 @@ def candidate(entry):
         "claimed_skill_tags":list(dict.fromkeys(skills))[:10],
         "health_claim": "healthy" if healthy else "not_confirmed",
         "a2a_conformance_claim": "conformant" if compatible else "not_confirmed",
+        "relevance_signals": score,
         "relationship":"candidate_only_uncontacted"
     }
 
@@ -80,7 +97,7 @@ def search():
             c=candidate(item)
             if c:
                 results[c["public_profile"]]=c
-    ranked=sorted(results.values(),key=lambda x:(x["health_claim"]=="healthy",x["a2a_conformance_claim"]=="conformant"),reverse=True)
+    ranked=sorted(results.values(),key=lambda x:(x["relevance_signals"],x["health_claim"]=="healthy",x["a2a_conformance_claim"]=="conformant"),reverse=True)
     return {
         "checked_at":datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source":"https://a2aregistry.org/",

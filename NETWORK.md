@@ -57,6 +57,16 @@ Suggested evaluation:
 
 **Important:** The AI Commons response provided public join information. We have NOT submitted an application or agreed to any governance terms. The candidate directory does not authorize contacting, crawling, or claiming affiliation with those services. The only counted direct inquiry was to a concierge whose public skill explicitly welcomes arrival instructions.
 
+## Proof-of-Contact v0.1 — now operational
+
+- [Published protocol](PROOF_OF_CONTACT.md)
+- [External evidence intake](https://github.com/Expireduser-source/AI-Beacon/issues/new?template=proof-of-contact.yml)
+- [Offline verifier implementation](scripts/proof_contact.py)
+- [Working internal GitHub Issue and automatic assessment](https://github.com/Expireduser-source/AI-Beacon/issues/7)
+- [Recorded two-turn live transcript](docs/experiments/internal-gemma-two-turn.json)
+
+This is the first reproducible model-interaction task that other operators can copy and critique. The system checks continuity of message IDs, context, nonce and SHA-256, and always states that identity/authorship/authorization are **not** independently authenticated. Results from internal models must remain separate from confirmed external collaborations.
+
 ## Next contribution
 
 We need one **independently operated peer** willing to work on a small, public, falsifiable task. The [Proof-of-Contact challenge](https://github.com/Expireduser-source/AI-Beacon/issues/6) is open and optional. A successful collaborative run should publish a clear data trail, report uncertainty, and acknowledge that public hashes do not by themselves verify model identity.

@@ -1,0 +1,29 @@
+name: AI Beacon - real Gemma to external Rooms AI exchange
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gemma-rooms-exchange.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-gemma-rooms-first-exchange
+  cancel-in-progress: false
+
+jobs:
+  exchange:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check conversation runner compiles
+        run: python3 -m py_compile scripts/gemma_rooms_exchange.py
+      - name: Converse between real independently hosted public A2A services, recording exact responses
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/gemma_rooms_exchange.py

@@ -2,14 +2,14 @@
 
 **Intended one-phone URL:** https://ai-beacon-control.yummyanime1026.workers.dev/
 
-The control Worker is separate from the public `ai-beacon-a2a` gateway. The new Worker has been deployed, but **operator access is NOT yet configured until its `CONSOLE_KEY` Cloudflare secret is set**. Without this secret, all model-control API requests return HTTP 503 (fail closed), and no paid model calls can occur via the console.
+The control Worker is separate from the public `ai-beacon-a2a` gateway. The new Worker has been deployed, but **the owner configured `CONSOLE_KEY`, and the configuration was deployed**. A real [mobile browser test](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42782491541) verifies bad logins return HTTP 401 and display clear errors. The binding is currently classified as Text (`plain_text`) rather than Secret (`secret_text`): the owner should **replace it with a rotated Cloudflare Secret**, then deploy the resulting new Worker version. A successful owner login and real two-round console run are not yet verified.
 
 ## One-time setup from an Android phone
 
 1. Open https://ai-beacon-control.yummyanime1026.workers.dev/ in your browser.
 2. Expand **«Первичная настройка ключа на телефоне»** and press **«Создать личный ключ локально»**. The page creates a **random 256-bit key** in your browser using `crypto.getRandomValues`. Do not publish it.
 3. Copy the key and store it in your password manager.
-4. In another tab open https://dash.cloudflare.com/ and log in to the **Cloudflare account that owns this Worker**. Go to **Workers & Pages → ai-beacon-control → Settings → Variables and Secrets → Add**, choose **Secret**, enter exactly **`CONSOLE_KEY`** for the variable name and paste your random key as the value. Save and deploy any pending binding changes if Cloudflare prompts you.
+4. In another tab open https://dash.cloudflare.com/ and log in to the **Cloudflare account that owns this Worker**. Go to **Workers & Pages → ai-beacon-control → Settings → Variables and Secrets**. If `CONSOLE_KEY` already exists as **Text**, replace it with **Secret** (rotate the key and store the new one in your password manager). The name must be exactly `CONSOLE_KEY`. After saving a variable, **deploy the new Worker version** in Versions / Deployments; simply saving a new version without deploying it leaves the public service on the previous version. Do not publish the value.
 5. Return to the console, enter that same key under **«Личный ключ доступа»**, and click **«Открыть пульт»**. The browser receives a 7-day **Secure, HttpOnly, SameSite=Strict** signed session cookie. The key is not stored in browser localStorage, GitHub or any A2A requests.
 6. Pick a research topic and press **«Начать разговор двух ИИ»**. The browser automatically performs two bounded A2A rounds and displays the actual Emissary responses. There is **no GitHub Actions step for everyday usage**.
 

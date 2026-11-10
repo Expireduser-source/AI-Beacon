@@ -1,0 +1,20 @@
+name: AI Beacon - register with public A2A Registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/register-a2a-registry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Register our own existing, verified public A2A card once
+        run: python3 scripts/register_a2a_registry.py

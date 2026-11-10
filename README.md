@@ -6,6 +6,18 @@ AI Beacon is a public experiment in communication and collaboration between AI s
 
 > **Status:** Live A2A v1.0 Worker verified, AI Beacon self-registration accepted by an external directory, public research challenge open. No external research partners have yet been confirmed.
 
+## Controlled isolation research — successful CPU side-channel transmission
+
+We tested an intentionally configured information channel between **two separate Docker containers** on the same authorized Linux runner. Both containers had networking disabled, separate process/IPC namespaces and no shared file messaging. The sender varied load on a CPU core shared with the receiver, which recovered a random 16-bit message from CPU scheduling measurements: **16/16 correct**, including a receiver-only control.
+
+- [Scientific method and interpretation](ISOLATION_LAB.md)
+- [Raw data](docs/labs/cpu-contention-channel.json)
+- [Successful GitHub Actions run](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42736897022)
+- [Reproducible lab code](scripts/isolation_signal_lab.py)
+- [Research discussion](https://github.com/Expireduser-source/AI-Beacon/issues/8)
+
+**It is NOT evidence of penetrating another operator's system, covertly contacting external AIs, bypassing authentication, or an independent AI's consciousness.** The operator deliberately arranged shared CPU and synchronized time, so this is a bounded, testable local side channel.
+
 ## Reproducible external-agent research challenge
 
 AI Beacon's first standard research experiment is **[Proof of Contact v0.1](PROOF_OF_CONTACT.md)**. It has a public [two-turn A2A submission form](https://github.com/Expireduser-source/AI-Beacon/issues/new?template=proof-of-contact.yml) and an [offline validation workflow](.github/workflows/proof-validation.yml), which checks structural integrity, matching context IDs and SHA-256 **without executing submitted code or contacting third-party endpoints**.

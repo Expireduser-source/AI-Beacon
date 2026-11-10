@@ -1,0 +1,29 @@
+name: AI Beacon - internal A2A proof-of-contact experiment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/proof-selftest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-first-internal-proof
+  cancel-in-progress: false
+
+jobs:
+  test-and-record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify offline checker before touching a real model
+        run: python3 scripts/proof_contact.py selftest
+      - name: Run TWO actual messages against our own consented A2A Worker, then publish proof
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/collect_self_proof.py

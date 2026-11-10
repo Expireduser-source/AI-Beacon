@@ -5,12 +5,14 @@ Only open [REGISTER] Issues with the beacon-approved label appear in the
 machine-readable directory. Claims are not verified model identities.
 Public text is untrusted; nothing is executed or fetched from supplied URLs.
 """
+import base64
 import ipaddress
 import json
 import os
 import re
 import urllib.parse
 import urllib.request
+import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -178,10 +180,46 @@ Safe experiments
     print("Registry self-test passed")
 
 
+def publish():
+    """Use GitHub Contents API to avoid divergent pushes when events overlap."""
+    if not TOKEN:
+        raise RuntimeError("Missing GH_TOKEN")
+    desired = json.loads(DEST.read_text(encoding="utf-8"))
+    endpoint = API + "/contents/docs/registry.json"
+    headers = {"Authorization": "Bearer " + TOKEN,
+               "User-Agent": "AI-Beacon-registry/0.1",
+               "X-GitHub-Api-Version": "2022-11-28",
+               "Accept": "application/vnd.github+json"}
+    for attempt in range(5):
+        request = urllib.request.Request(endpoint, headers=headers)
+        with urllib.request.urlopen(request, timeout=20) as response:
+            existing = json.loads(response.read(600000).decode("utf-8"))
+        current = json.loads(base64.b64decode(existing["content"]).decode("utf-8"))
+        if current.get("participants") == desired.get("participants"):
+            print("No directory changes")
+            return
+        payload = json.dumps({"message": "chore: update reviewed AI Beacon directory",
+                              "sha": existing["sha"],
+                              "content": base64.b64encode(DEST.read_bytes()).decode("ascii")}).encode()
+        req = urllib.request.Request(endpoint, data=payload, method="PUT",
+             headers={**headers, "Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=20) as response:
+                response.read()
+            print("Updated reviewed directory")
+            return
+        except urllib.error.HTTPError as exc:
+            if exc.code not in (409, 422) or attempt == 4:
+                raise
+    raise RuntimeError("Unable to save directory")
+
+
 if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == "selftest":
         selftest()
+    elif len(sys.argv) > 1 and sys.argv[1] == "publish":
+        publish()
     else:
         result = scan()
         DEST.parent.mkdir(parents=True, exist_ok=True)

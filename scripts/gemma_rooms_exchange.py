@@ -36,7 +36,7 @@ def http_json(url, data=None, method=None, headers=None, timeout=35):
     payload = json.dumps(data, ensure_ascii=False).encode("utf-8") if data is not None else None
     h = {"User-Agent": UA, "Accept": "application/json", **(headers or {})}
     if payload is not None:
-        h["Content-Type"] = "application/json"
+        h.setdefault("Content-Type", "application/json")
     req = urllib.request.Request(url, method=method or ("POST" if payload else "GET"),
                                   data=payload, headers=h)
     with OPENER.open(req, timeout=timeout) as response:

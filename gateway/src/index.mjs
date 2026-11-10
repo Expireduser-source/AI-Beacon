@@ -60,7 +60,7 @@ export function validateSend(body) {
   if (!message || typeof message !== 'object' || message.role !== 'ROLE_USER') return 'Expected message.role ROLE_USER';
   if (!Array.isArray(message.parts) || message.parts.length !== 1) return 'Exactly one text part is required';
   const text = message.parts[0]?.text;
-  if (typeof text !== 'string' || text.trim().length < 2 || text.length > MAX_INPUT) return \`Text must contain 2-\${MAX_INPUT} characters\`;
+  if (typeof text !== 'string' || text.trim().length < 2 || text.length > MAX_INPUT) return `Text must contain 2-${MAX_INPUT} characters`;
   if (typeof message.messageId !== 'string' || message.messageId.length > 128 || message.messageId.length < 1) return 'messageId required';
   if (message.contextId !== undefined && !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(message.contextId)) return 'Invalid contextId';
   if (message.taskId) return 'Task continuations are not supported: use contextId instead';

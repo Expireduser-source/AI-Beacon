@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
-      - name: Run dialogue tests without any API key or external calls
+      - name: Run tests without model downloads or API calls
         run: python3 -m unittest discover -s tests -p 'test_dialogue_agent.py' -v
 
   respond:
@@ -33,19 +33,44 @@ jobs:
       github.event_name == 'issue_comment' &&
       startsWith(github.event.issue.title, '[DIALOGUE]') &&
       github.event.comment.user.type != 'Bot' &&
+      github.event.issue.user.login == github.repository_owner &&
       github.event.issue.state == 'open'
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 9
     permissions:
       contents: read
       issues: write
     steps:
       - uses: actions/checkout@v4
-      - name: Generate one model answer to one real message
+      - name: Check whether this is an authorized new turn
+        id: preflight
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: echo "ready=$(python3 scripts/dialogue_agent.py preflight)" >> "$GITHUB_OUTPUT"
+      - name: Start free local Qwen model when no Gemini key exists
+        if: steps.preflight.outputs.ready == 'true'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            curl -fsSL https://ollama.com/install.sh -o /tmp/install-ollama.sh
+            sh /tmp/install-ollama.sh
+            nohup ollama serve > /tmp/ollama.log 2>&1 &
+            for i in $(seq 1 20); do
+              if curl -fsS http://127.0.0.1:11434/api/tags > /dev/null; then break; fi
+              sleep 2
+            done
+            ollama pull qwen2.5:1.5b-instruct
+          fi
+      - name: Generate next reply from an independent model
+        if: steps.preflight.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           BEACON_GEMINI_MODEL: gemini-3.1-flash-lite
+          BEACON_LOCAL_MODEL: qwen2.5:1.5b-instruct
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
         run: python3 scripts/dialogue_agent.py

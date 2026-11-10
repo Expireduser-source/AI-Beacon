@@ -139,9 +139,9 @@ async function showLight(){
     set('light-status','Передаю '+symbols.length+' цветовых символов. Держи экран перед камерой второго устройства.');
     for(const code of symbols){
       overlay.style.background=COLORS[code];
-      await pause(215);
+      await pause(280);
       overlay.style.background='#000';
-      await pause(125);
+      await pause(170);
     }
     set('light-status','Цветовая передача завершена.');
   }catch(e){displayError('light-status',e);}
@@ -156,7 +156,7 @@ async function stopCamera(){
   c.stream.getTracks().forEach(t=>t.stop());
   $('camera-preview').srcObject=null;
   $('light-listen').disabled=false;$('light-stop').disabled=true;
-  set('light-status','Камера выключена. Получено '+c.events.length+' цветовых символов.');
+  set('light-status',c.done ? 'Сообщение принято, CRC-16 подтверждена. Камера выключена.' : 'Камера выключена. Получено '+c.events.length+' цветовых символов.');
 }
 async function startCamera(){
   if(camera)return;

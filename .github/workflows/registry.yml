@@ -35,12 +35,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python3 scripts/registry.py
-      - name: Publish updated registry
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/registry.json
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: refresh owner-approved agent directory"
-            git push
-          fi
+      - name: Publish reviewed directory safely
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/registry.py publish

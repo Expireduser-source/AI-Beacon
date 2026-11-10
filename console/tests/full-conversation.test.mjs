@@ -90,6 +90,14 @@ test('Real owner browser flow with a fake model and a fake A2A service stores bo
     assert.equal(login.status,200);
     assert.match(login.cookie,/HttpOnly/);
     const cookie=login.cookie.split(';')[0];
+    const health=await request(fake.env,'/health','GET');
+    assert.equal(health.status,200);
+    assert.equal(health.body.storage,'ok','public health must check the actual Durable Object');
+    const preflight=await request(fake.env,'/api/preflight','GET',null,cookie);
+    assert.equal(preflight.status,200,JSON.stringify(preflight.body));
+    assert.equal(preflight.body.ok,true);
+    assert.equal(fake.aiCalls.length,0,'preflight must never call the paid model');
+    assert.equal(fake.remoteCalls.length,0,'preflight must never submit an A2A job');
     const start=await request(fake.env,'/api/start','POST',
       {topic:'How can models independently audit scientific claims?'},cookie);
     assert.equal(start.status,200);

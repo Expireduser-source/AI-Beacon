@@ -296,8 +296,18 @@ export default {
       try{return new Response(await staticAsset('js'),{headers:{...headers,'content-type':'text/javascript; charset=utf-8'}});}
       catch(_){return fail(503,'Модуль интерфейса пока не опубликован.');}
     }
-    if(request.method==='GET'&&path==='/health')
-      return jsonResponse({status:'online',auth:'owner-key-required',external:'public Emissary A2A only'});
+    if(request.method==='GET'&&path==='/health'){
+      try{
+        const check=await room(env,'/status');
+        return jsonResponse({status:check.status===200?'online':'degraded',
+          storage:check.status===200?'ok':'error',
+          auth:'owner-key-required',external:'public Emissary A2A only'},
+          check.status===200?200:503);
+      }catch(_){
+        return jsonResponse({status:'degraded',storage:'error',
+          auth:'owner-key-required',external:'public Emissary A2A only'},503);
+      }
+    }
     if(!path.startsWith('/api/'))return fail(404,'Не найдено.');
     if(!env.CONSOLE_KEY||env.CONSOLE_KEY.length<32)return fail(503,'Владелец ещё не настроил серверный ключ доступа.');
     if(request.method==='POST' && !ownOrigin(request))
@@ -325,12 +335,26 @@ export default {
       const result=await room(env,'/status');
       return jsonResponse(result.body,result.status);
     }
+    if(request.method==='GET'&&path==='/api/preflight'){
+      try{
+        if(!env.AI||typeof env.AI.run!=='function')throw new Error('Workers AI привязка отсутствует.');
+        const state=await room(env,'/status');
+        if(state.status!==200)throw new Error('Хранилище разговоров недоступно.');
+        await verifyRemoteCard();
+        return jsonResponse({ok:true,gemma:'configured',storage:'ok',emissary:'reachable',
+          note:'Проверены привязки и Agent Card, без расходов на генерацию.'});
+      }catch(e){
+        return fail(502,'Проверка связи не пройдена: '+errText(e).slice(0,145));
+      }
+    }
     if(request.method==='POST'&&path==='/api/start'){
       try{
         const data=await payload(request);const topic=validTopic(data.topic);
+        if(!env.AI||typeof env.AI.run!=='function')throw new Error('Workers AI недоступна.');
+        await verifyRemoteCard();
         const result=await room(env,'/start',{topic});
         return jsonResponse(result.body,result.status);
-      }catch(e){return fail(400,errText(e).slice(0,120));}
+      }catch(e){return fail(502,'Не удалось начать разговор: '+errText(e).slice(0,150));}
     }
     if(request.method==='POST'&&path==='/api/step'){
       let runId;

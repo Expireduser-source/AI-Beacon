@@ -1,0 +1,45 @@
+name: AI Beacon - private console live smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/console-live-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify production Worker serves interface and never exposes model control anonymously
+        run: |
+          python3 - <<'PY'
+          import json
+          import time
+          import urllib.error
+          import urllib.request
+          url = "https://ai-beacon-control.yummyanime1026.workers.dev"
+          def get(path):
+              req=urllib.request.Request(url+path,headers={"User-Agent":"AI-Beacon-Console-CI"})
+              try:
+                  with urllib.request.urlopen(req,timeout=20) as response:
+                      return response.status,response.read(100000).decode("utf-8")
+              except urllib.error.HTTPError as e:
+                  return e.code,e.read(100000).decode("utf-8")
+          for path in ("/health","/","/app.js"):
+              status,body=get(path)
+              print(path,"status",status,"body_length",len(body))
+              if status != 200:
+                  raise SystemExit("Unexpected public route status: "+path)
+          status,body=get("/api/status")
+          print("/api/status anonymous status",status)
+          assert status in (401,503), "Public data leaked or missing auth gate"
+          health=json.loads(get("/health")[1])
+          assert health["auth"]=="owner-key-required"
+          print("PASS: HTTP UI and health available; owner endpoints fail closed without authentication")
+          PY

@@ -25,3 +25,5 @@ jobs:
           npx playwright install chromium
       - name: Verify mobile login errors without using any owner secret
         run: node console/tests/live-mobile-login.e2e.mjs
+      - name: Verify mobile dialogue UI, progress and resume using mocked API only
+        run: node console/tests/live-mobile-conversation.e2e.mjs

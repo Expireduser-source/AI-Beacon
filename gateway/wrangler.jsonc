@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ai-beacon-a2a",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-10-01",
+  "ai": { "binding": "AI" },
+  "durable_objects": {
+    "bindings": [{ "name": "ROOMS", "class_name": "BeaconRoom" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["BeaconRoom"] }],
+  "vars": { "GLOBAL_DAILY_LIMIT": "24" }
+}

@@ -1,0 +1,30 @@
+name: AI Beacon - real browser WebRTC integration test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/multichannel-browser-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium browser testing dependencies
+        run: |
+          npm install --no-save playwright
+          npx playwright install chromium
+      - name: Serve static website over secure localhost and run real peer-to-peer browser trial
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory docs > /tmp/ai-beacon-http.log 2>&1 &
+          sleep 2
+          node docs/multichannel/tests/browser-peer.e2e.mjs

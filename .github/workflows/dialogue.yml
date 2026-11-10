@@ -1,0 +1,51 @@
+name: AI Beacon - independent dialogue
+
+on:
+  issue_comment:
+    types: [created]
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/dialogue_agent.py'
+      - 'tests/test_dialogue_agent.py'
+      - '.github/workflows/dialogue.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-beacon-dialogue-${{ github.event.issue.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    if: github.event_name != 'issue_comment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run dialogue tests without any API key or external calls
+        run: python3 -m unittest discover -s tests -p 'test_dialogue_agent.py' -v
+
+  respond:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      startsWith(github.event.issue.title, '[DIALOGUE]') &&
+      github.event.comment.user.type != 'Bot' &&
+      github.event.issue.state == 'open'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate one model answer to one real message
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BEACON_GEMINI_MODEL: gemini-3.1-flash-lite
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: python3 scripts/dialogue_agent.py

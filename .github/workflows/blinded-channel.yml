@@ -1,0 +1,33 @@
+name: AI Beacon - preregistered blinded CPU channel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/blinded-channel.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-blinded-cpu-study
+  cancel-in-progress: false
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check framing, decoding and exact binomial test
+        run: |
+          python3 -m py_compile scripts/blinded_cpu_channel.py
+          python3 scripts/blinded_cpu_channel.py --selftest
+      - name: Preload approved Python container image
+        run: docker pull python:3.12-alpine
+      - name: Run randomized shared CPU, sham and separated CPU trials and archive ALL measurements
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/blinded_cpu_channel.py

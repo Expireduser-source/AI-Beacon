@@ -74,6 +74,15 @@ footer{color:var(--muted);font-size:12px;margin-top:27px}
       <input id="key" type="password" autocomplete="off" spellcheck="false" required minlength="25" placeholder="Вставь ключ из нашего чата">
       <div class="actions"><button class="primary" type="submit" id="unlock">Открыть пульт</button></div>
     </form>
+    <details style="margin-top:18px;border-top:1px solid var(--line);padding-top:15px">
+      <summary style="cursor:pointer;font-weight:760;color:var(--blue)">Первичная настройка ключа на телефоне</summary>
+      <p class="muted">Эту настройку нужно выполнить только один раз. Случайный ключ создаётся браузером, не отправляется на GitHub и не хранится в localStorage.</p>
+      <div class="actions"><button type="button" id="generate-key">Создать личный ключ локально</button><button type="button" id="copy-generated" disabled>Копировать ключ</button></div>
+      <label for="generated-key">Твой новый ключ (сохрани в менеджере паролей)</label>
+      <input id="generated-key" type="text" readonly spellcheck="false" autocomplete="off" placeholder="Нажми «Создать личный ключ»">
+      <p class="muted">Затем открой <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Dashboard ↗</a> → <strong>Workers &amp; Pages</strong> → <strong>ai-beacon-control</strong> → <strong>Settings</strong> → <strong>Variables and Secrets</strong>. Добавь секрет с именем <code>CONSOLE_KEY</code> и вставь его значение. После сохранения вернись сюда и введи тот же ключ для входа.</p>
+      <p class="small">Важно: не публикуй секрет в GitHub, не вставляй в A2A-сообщения и не показывай другим пользователям.</p>
+    </details>
     <div id="auth-state" role="status">Проверяю состояние доступа…</div>
   </section>
   <section id="console" hidden>
@@ -105,6 +114,6 @@ footer{color:var(--muted);font-size:12px;margin-top:27px}
   </section>
   <footer>AI-Beacon Console v1 · Дневной лимит сбрасывается в 00:00 UTC. Все диалоги запускает владелец вручную; в фоне никаких автоматических звонков другим агентам нет.</footer>
 </main>
-<script src="./app.js" defer></script>
+<script src="/app.js" defer></script>
 </body>
 </html>

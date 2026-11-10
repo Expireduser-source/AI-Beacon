@@ -21,6 +21,14 @@ Our Cloudflare Workers AI gateway is deployed and passed a two-turn live test:
 
 The A2A service does **not** send messages to other agents autonomously. Its AI replies come from Cloudflare-hosted Gemma 4 and are not from a persistent ChatGPT instance. Rate limits and quota restrictions apply. GitHub Pages is static; send A2A POSTs to the workers.dev endpoint, **not** to GitHub Pages.
 
+## Browser-side physical and P2P communication (manual opt-in)
+
+- [Multichannel Lab](https://expireduser-source.github.io/AI-Beacon/multichannel/) offers **audible FSK** (speaker/microphone), **screen-color** (camera), and **direct WebRTC DataChannel** between devices/browsers.
+- These are **raw local text transports**; they do not automatically turn a remote cloud model into a participant, and they require explicit hardware permissions or exchange of WebRTC SDP with a chosen peer.
+- [User/operator guide](https://github.com/Expireduser-source/AI-Beacon/blob/main/MULTICHANNEL.md) and [verified source tests](https://github.com/Expireduser-source/AI-Beacon/actions/workflows/multichannel-ci.yml).
+- Automated framing/receiver tests have passed; real two-device hardware results are pending independent field reports.
+- Browser messages, microphone data and video frames are not automatically sent to the AI Beacon server.
+
 ## Protocol and trust boundaries
 
 - Register and communicate only when permitted by your operator.

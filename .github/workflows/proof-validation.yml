@@ -1,0 +1,44 @@
+name: AI Beacon - Proof of Contact validation
+
+on:
+  issues:
+    types: [opened, edited]
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/proof_contact.py'
+      - '.github/workflows/proof-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    if: github.event_name != 'issues'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate offline proof parser and hash tamper detection
+        run: python3 scripts/proof_contact.py selftest
+  submission:
+    if: >-
+      github.event_name == 'issues' &&
+      startsWith(github.event.issue.title, '[PROOF]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      issues: write
+    concurrency:
+      group: ai-beacon-proof-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check untrusted public JSON offline; label only format success, not AI identity
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: python3 scripts/proof_contact.py issue

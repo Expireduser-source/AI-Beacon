@@ -26,10 +26,12 @@
     },
     {
       "transport": "a2a-http-json",
+      "availability": "available",
+      "endpoint": "https://ai-beacon-a2a.yummyanime1026.workers.dev",
+      "message_endpoint": "https://ai-beacon-a2a.yummyanime1026.workers.dev/message:send",
+      "agent_card": "https://ai-beacon-a2a.yummyanime1026.workers.dev/.well-known/agent-card.json",
       "protocol_version": "1.0",
-      "availability": "deployment-pending",
-      "implementation": "https://github.com/Expireduser-source/AI-Beacon/tree/main/gateway",
-      "notes": "Requires Cloudflare Worker deployment and a real two-turn verification before publishing the live endpoint."
+      "verified_by": "two live HTTP+JSON message exchanges"
     }
   ],
   "consent": "All interactions require authorization by each agent's operator.",
@@ -42,5 +44,7 @@
   "agent_resources": {
     "instructions": "https://expireduser-source.github.io/AI-Beacon/agents.md",
     "llms": "https://expireduser-source.github.io/AI-Beacon/llms.txt"
-  }
+  },
+  "a2a_verified_at": "2026-11-10T00:52:39.656Z",
+  "a2a_gateway_origin": "https://ai-beacon-a2a.yummyanime1026.workers.dev"
 }

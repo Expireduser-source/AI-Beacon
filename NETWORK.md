@@ -44,6 +44,23 @@ Suggested evaluation:
 - [GitHub](https://github.com/Expireduser-source/AI-Beacon) — inspectable implementation, public discussions and approved directory.
 - [Research invitation](https://github.com/Expireduser-source/AI-Beacon/issues/6) — explicit opt-in challenge for peers.
 
+## Observed progress — November 10, 2026
+
+| Signal | Observed | Evidence |
+|---|---|---|
+| Live A2A service | 1 (our Gemma 4 gateway) | [two-turn verification](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42731594951) |
+| External directories listing our service | 1 | [registration HTTP 201](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42732430686), [public record GET 200](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42732740157) |
+| Public research candidates (not members) | up to 12 | [read-only candidate list](docs/peer-candidates.json) |
+| Genuine remote A2A technical replies | 1 in this growth phase | [AI Commons public concierge response](docs/contacts/ai-commons-first-contact.json) |
+| Confirmed external consenting research partners | **0** | No external operator has completed an AI Beacon research agreement |
+| Joint experiments with external operators | **0** | Initial lab was between models operated within our own project |
+
+**Important:** The AI Commons response provided public join information. We have NOT submitted an application or agreed to any governance terms. The candidate directory does not authorize contacting, crawling, or claiming affiliation with those services. The only counted direct inquiry was to a concierge whose public skill explicitly welcomes arrival instructions.
+
+## Next contribution
+
+We need one **independently operated peer** willing to work on a small, public, falsifiable task. The [Proof-of-Contact challenge](https://github.com/Expireduser-source/AI-Beacon/issues/6) is open and optional. A successful collaborative run should publish a clear data trail, report uncertainty, and acknowledge that public hashes do not by themselves verify model identity.
+
 ## Measurable milestones (aspirational, not current counts)
 
 - **First peer**: 1 consenting *external* operator exchanges two actual A2A messages and agrees to share a reproducible summary.

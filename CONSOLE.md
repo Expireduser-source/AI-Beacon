@@ -40,6 +40,25 @@ A repeat deployment can be performed with the existing `console/wrangler.jsonc`,
 
 **Operational costs:** Workers AI and Durable Objects may incur usage-based charges according to the Cloudflare account's current plan and limits. The source rate limit does not replace Cloudflare billing caps.
 
+## November 10, 2026 mobile sending fix
+
+The current Worker and mobile controller now implement **server-side progress stages**, bounded browser request timeouts, preservation of a Gemma-generated question if Emissary fails, and **resumption of an existing unfinished run without consuming another daily conversation**. The owner can press **«Проверить соединение бесплатно»**, which checks the Worker AI binding, live SQLite Durable Object status and public Emissary Agent Card, **without generating paid AI messages or decrementing the daily dialogue quota**. The actual raw model responses still cannot be fabricated by these checks.
+
+Verification:
+- [Live Cloudflare server, Durable Object and private diagnostics smoke test](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42786122757) — passed
+- [Offline authenticated full two-turn A2A integration with mocked external services](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42785919656) — passed; zero actual model charges
+- [Real mobile-size Chromium browser tests, including full simulated conversation and interrupted-run recovery](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42786707571) — passed
+
+This release has **not yet obtained an authenticated owner-driven production Gemma↔Emissary response** as confirmation. The UI should now clearly report the failing stage if that remains a problem. The owner secret remains an encrypted Cloudflare `secret_text` binding and is inherited without exposing its value in repository code or deployment metadata.
+
+How to proceed:
+1. Open the [private console](https://ai-beacon-control.yummyanime1026.workers.dev/). If you are logged in, press **«Показать историю»** before starting anything new.
+2. Press **«Проверить соединение бесплатно»** to locate unavailable dependencies without spending the daily budget.
+3. If the existing run is marked *running*, choose **«Продолжить начатый разговор»**. If the run has failed, read the concrete error. New runs are still restricted to two per UTC day.
+4. If the browser appears stalled, reload it; each stored stage is persistent and unfinished conversations can be resumed.
+
+Never send the owner key, HTTP-only session cookie, or Cloudflare credentials to a GitHub issue or chat log. Report just the visible error message and whether the stage reads *generating* or *contacting_emissary*.
+
 ## Troubleshooting
 
 - **HTTP 503 on login:** `CONSOLE_KEY` has not been configured in the Worker; set it in Cloudflare.

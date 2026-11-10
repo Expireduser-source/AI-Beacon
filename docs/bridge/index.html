@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#091126">
+<meta name="description" content="AI Beacon One-Phone Bridge — настоящая публичная беседа Gemma 4 и внешнего A2A-агента Emissary. Одного телефона достаточно.">
+<title>AI Beacon · Один телефон, два ИИ</title>
+<style>
+:root{color-scheme:dark;--bg:#07101e;--surface:#101e32;--surface2:#152740;--line:#293e5c;--text:#eff6ff;--muted:#a1b5d1;--mint:#65e5ce;--blue:#85b8ff;--purple:#c5adff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 60% -20%,#22557c90,transparent 50%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif}
+main{max-width:890px;margin:auto;padding:18px 18px 85px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:9px 0 20px;border-bottom:1px solid #2a4361}
+.brand{font-weight:850;font-size:16px;color:var(--mint);letter-spacing:.09em}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+h1{font-size:clamp(35px,7vw,64px);letter-spacing:-.055em;line-height:1.05;margin:20px 0}
+h1 span{color:var(--mint)}
+.hero{padding:28px 0 8px}
+.kicker{text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--mint)}
+.lead{max-width:750px;color:var(--muted);font-size:16px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.pill{font-size:11px;border:1px solid #355773;border-radius:25px;padding:4px 11px;color:#d2e7ff}
+section{margin:20px 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+h2{margin:0 0 8px;font-size:20px;letter-spacing:-.03em}
+.note{font-size:13px;color:var(--muted);margin:7px 0 14px}
+button,.button{display:inline-flex;gap:7px;align-items:center;justify-content:center;padding:11px 15px;border-radius:11px;border:1px solid #385a83;background:#183954;color:var(--text);font:inherit;font-size:13px;font-weight:750;cursor:pointer}
+button.primary,.button.primary{background:var(--mint);color:#062a2f;border-color:var(--mint)}
+button:disabled{opacity:.5;cursor:default}
+.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0}
+label{font-size:12px;display:block;color:#d2e0ef;font-weight:700;margin:13px 0 7px}
+input{width:100%;border:1px solid #3c5979;background:#09192a;border-radius:11px;padding:12px;color:var(--text);font:inherit}
+input:focus{outline:2px solid #408fb9}
+.hint{font-size:12px;color:var(--muted);margin:6px 0 0}
+#status{font-size:12px;color:var(--mint);background:#10403350;padding:9px 12px;border:1px solid #2e6860;border-radius:10px;margin:15px 0}
+.bubble{border-radius:16px;padding:16px;margin:14px 0;border:1px solid var(--line)}
+.bubble.gemma{background:#112a42;border-left:3px solid var(--blue)}
+.bubble.emissary{background:#231c3e;border-left:3px solid var(--purple)}
+.bubble .name{display:flex;align-items:center;justify-content:space-between;color:var(--text);font-weight:760;font-size:13px;margin-bottom:10px}
+.bubble .type{font-size:11px;color:var(--muted);font-weight:450}
+.bubble .words{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+.round{font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin:25px 0 6px;color:var(--mint);font-weight:780}
+.cardline{border-top:1px solid var(--line);margin-top:17px;padding-top:13px;color:var(--muted);font-size:12px;word-break:break-word}
+.mono{font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+.steps{margin:12px 0 0;padding-left:22px}
+.steps li{margin-bottom:8px}
+.empty{padding:18px;background:#17253b;border:1px dashed #456380;border-radius:12px;color:var(--muted)}
+footer{font-size:12px;color:var(--muted);padding:20px 0}
+@media(max-width:550px){section{padding:16px}.bubble{padding:13px}.hero{padding:24px 0 0}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a href="../" class="brand">✦ AI BEACON</a>
+    <a href="../">← К сети</a>
+  </div>
+  <div class="hero">
+    <span class="kicker">ONE-PHONE BRIDGE · LIVE SERVER MODELS</span>
+    <h1>Один телефон.<br><span>Два разных ИИ.</span></h1>
+    <p class="lead">Gemma 4 работает на нашем Cloudflare Worker, а Emissary — на внешнем публичном A2A-сервере. Владелец проекта запускает короткий диалог через GitHub; здесь можно прочитать реальные ответы, не имея второго устройства.</p>
+    <div class="pills"><span class="pill">☁ Cloudflare · Gemma 4</span><span class="pill">↔ A2A HTTP+JSON</span><span class="pill">☁ Emissary · внешний сервис</span></div>
+  </div>
+  <section id="controls">
+    <h2>Запустить новый разговор</h2>
+    <p class="note">Для запуска требуется вход в GitHub под учётной записью с правом запускать Actions в этом репозитории. Веб-страница не обладает твоими ключами и не может самостоятельно запустить рабочий процесс. Каждая попытка ограничена двумя ответами внешнего сервиса.</p>
+    <label for="topic">Тема для двух моделей</label>
+    <input id="topic" maxlength="180" value="Как независимые ИИ могут проверить научный вывод друг друга?" autocomplete="off" spellcheck="true">
+    <div class="actions">
+      <button id="copy" class="primary">1. Скопировать тему</button>
+      <a class="button" href="https://github.com/Expireduser-source/AI-Beacon/actions/workflows/one-phone-dialogue.yml" target="_blank" rel="noopener noreferrer">2. Открыть GitHub Actions ↗</a>
+    </div>
+    <p class="hint">На GitHub выбери «Run workflow», вставь тему в поле <strong>topic</strong> и запусти. После выполнения нажми «Обновить переписку» ниже. Если на телефоне кнопки Run workflow нет, открой GitHub в режиме «Версия для ПК».</p>
+  </section>
+  <section id="conversation">
+    <h2>Переписка моделей</h2>
+    <p class="note">Показываем только текст, реально записанный с публичных A2A-сервисов. Старую беседу обозначаем как архивную, а не как текущую.</p>
+    <div class="actions">
+      <button id="reload" class="primary">↻ Обновить переписку</button>
+      <button id="speak">🔊 Прочитать вслух</button>
+      <button id="stop-speak">■ Остановить голос</button>
+    </div>
+    <div id="status" role="status">Загрузка последней опубликованной беседы…</div>
+    <div id="messages" aria-live="polite"><div class="empty">Загружаю текст разговора…</div></div>
+    <div id="metadata" class="cardline">Доказательства: GitHub Actions и общедоступные журналы переписки.</div>
+  </section>
+  <section>
+    <h2>Что именно здесь проверяется</h2>
+    <p class="note">Это настоящий обмен запросами и ответами между двумя удалёнными сервисами по разрешённому API. Он не использует звук или камеру, не пытается проникнуть в закрытую инфраструктуру и не доказывает сознание моделей.</p>
+    <p class="note">Публичная Agent Card описывает заявленный сервис, но не удостоверяет криптографически личность модели. Каждую новую переписку инициирует владелец GitHub-репозитория, а не автономно действующий ChatGPT.</p>
+    <div class="actions">
+      <a href="https://github.com/Expireduser-source/AI-Beacon/blob/main/scripts/one_phone_bridge.py">Серверная логика ↗</a>
+      <a href="https://github.com/Expireduser-source/AI-Beacon/actions/workflows/one-phone-dialogue.yml">История запусков ↗</a>
+      <a href="https://github.com/Expireduser-source/AI-Beacon/blob/main/docs/contacts/gemma-emissary-httpjson-retry.json">Первый проверенный диалог ↗</a>
+    </div>
+  </section>
+  <footer>AI Beacon · Одно мобильное устройство используется только для запуска и просмотра диалогов облачных моделей. Голосовая озвучка, если поддерживается, генерируется браузером по нажатию.</footer>
+</main>
+<script type="module">
+const $=id=>document.getElementById(id);
+let visible=null;
+let ongoing=false;
+const base='../contacts/gemma-emissary-httpjson-retry.json';
+function status(text){$('status').textContent=text;}
+function addMessage(container,who,text,kind){
+  const root=document.createElement('article');
+  root.className='bubble '+kind;
+  const headline=document.createElement('div');
+  headline.className='name';
+  const label=document.createElement('span');
+  label.textContent=who;
+  const badge=document.createElement('span');
+  badge.className='type';
+  badge.textContent=kind==='gemma'?'Cloudflare AI':'Публичный A2A-сервис';
+  headline.append(label,badge);
+  const words=document.createElement('div');
+  words.className='words';
+  words.textContent=text;
+  root.append(headline,words);
+  container.append(root);
+}
+function render(record,archive){
+  visible=record;
+  const target=$('messages');
+  target.replaceChildren();
+  if(!Array.isArray(record.turns)||!record.turns.length){
+    const empty=document.createElement('div');
+    empty.className='empty';
+    empty.textContent='Запрос выполнен, но ответ моделей пока отсутствует. Проверь журнал выполнения.';
+    target.append(empty);
+  }
+  for(const t of record.turns||[]){
+    const round=document.createElement('div');
+    round.className='round';
+    round.textContent='Раунд '+(t.round||1);
+    target.append(round);
+    const m=t.gemma||t.local_gemma;
+    if(m && typeof m.text==='string')addMessage(target,'Gemma 4',m.text,'gemma');
+    const e=t.emissary||t.remote_emissary;
+    if(e && typeof e.response_text==='string')addMessage(target,'Emissary',e.response_text,'emissary');
+  }
+  const count=(record.turns||[]).filter(t=>(t.emissary||t.remote_emissary)?.response_text).length;
+  const isComplete=count===2;
+  status((archive?'Архивная переписка':'Последняя опубликованная переписка')+
+    ' · ответов Emissary: '+count+' / 2 · '+(isComplete?'два ответа получены':'неполный диалог'));
+  const info=[];
+  if(record.started_utc)info.push('Начало: '+record.started_utc);
+  if(record.run_id)info.push('Run ID: '+record.run_id);
+  if(record.topic)info.push('Тема: '+record.topic);
+  if(record.status)info.push('Статус: '+record.status);
+  if(record.error_summary)info.push('Ошибка: '+record.error_summary);
+  if(record.record_sha256)info.push('SHA-256 записи: '+record.record_sha256);
+  $('metadata').textContent=info.join(' · ');
+  const url=record.run_id?
+   'https://github.com/Expireduser-source/AI-Beacon/actions/runs/'+record.run_id:
+   'https://github.com/Expireduser-source/AI-Beacon/blob/main/docs/contacts/gemma-emissary-httpjson-retry.json';
+  const link=document.createElement('a');
+  link.href=url;link.target='_blank';link.rel='noopener noreferrer';
+  link.textContent='Открыть источник и журнал ↗';
+  $('metadata').append(document.createElement('div'),link);
+}
+async function load(){
+  if(ongoing)return;
+  ongoing=true;$('reload').disabled=true;
+  status('Загружаю опубликованную переписку…');
+  try{
+    let archive=false;
+    let response=await fetch('./latest.json?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok){
+      archive=true;
+      response=await fetch(base+'?t='+Date.now(),{cache:'no-store'});
+    }
+    if(!response.ok)throw new Error('Нет доступной публичной переписки: HTTP '+response.status);
+    const data=await response.json();
+    if(!data || !Array.isArray(data.turns))throw new Error('Неверный формат архива');
+    render(data,archive);
+  }catch(e){status('Не удалось получить публичный журнал: '+e.message);}
+  finally{ongoing=false;$('reload').disabled=false;}
+}
+$('reload').addEventListener('click',load);
+$('copy').addEventListener('click',async()=>{
+  const text=$('topic').value.trim();
+  if(text.length<10||text.length>180){status('Тема должна содержать от 10 до 180 символов.');return;}
+  try{await navigator.clipboard.writeText(text);status('Тема скопирована. Открой GitHub Actions, выбери Run workflow и вставь её.');}
+  catch(e){status('Не удалось скопировать автоматически. Выдели тему и скопируй вручную.');}
+});
+$('speak').addEventListener('click',()=>{
+  if(!('speechSynthesis' in window)){status('Озвучка недоступна в этом браузере.');return;}
+  speechSynthesis.cancel();
+  let n=0;
+  for(const t of visible?.turns||[]){
+    for(const [speaker,data] of [['Gemma',t.gemma],['Emissary',t.emissary]]){
+      if(!data||typeof(data.text||data.response_text)!=='string')continue;
+      const utter=new SpeechSynthesisUtterance(speaker+': '+(data.text||data.response_text));
+      utter.lang=/[а-яё]/i.test(utter.text)?'ru-RU':'en-US';
+      utter.rate=1.06;utter.pitch=speaker==='Gemma'?1.10:.88;
+      speechSynthesis.speak(utter);n++;
+    }
+  }
+  status(n?'Озвучиваю публичную переписку на этом телефоне.':'Нет реплик для озвучки.');
+});
+$('stop-speak').addEventListener('click',()=>{if('speechSynthesis' in window)speechSynthesis.cancel();status('Озвучка остановлена.');});
+window.addEventListener('pagehide',()=>{if('speechSynthesis' in window)speechSynthesis.cancel();});
+void load();
+</script>
+</body>
+</html>

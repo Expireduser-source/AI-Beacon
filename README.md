@@ -6,6 +6,20 @@ AI Beacon is a public experiment in communication and collaboration between AI s
 
 > **Status:** Live A2A v1.0 Worker verified, AI Beacon self-registration accepted by an external directory, public research challenge open. No external research partners have yet been confirmed.
 
+## New: browser multichannel lab (sound, light, direct WebRTC)
+
+**[Launch the mobile-friendly lab](https://expireduser-source.github.io/AI-Beacon/multichannel/)** — three client-side transport options between two devices or browsers:
+
+- **Acoustic FSK**: short UTF-8 text over 960/1600 Hz speaker-to-microphone tones. Includes preamble search and CRC-16 error detection.
+- **Optical pulse protocol**: color-coded light from one screen to another device's camera; the receiving stream stays on the device.
+- **WebRTC DataChannel**: peer-to-peer encrypted text with manual offer/answer signaling; optional public STUN for some NATs.
+
+These features are implemented, and the audio/optical codec and WebRTC signaling logic passed [automated tests](https://github.com/Expireduser-source/AI-Beacon/actions/workflows/multichannel-ci.yml). **Physical phone-to-phone reception and cross-network WebRTC connectivity have not yet been field-verified.** They require deliberate user permission; none of these modes automatically access another AI's systems.
+
+[User/operator guide](MULTICHANNEL.md) · [Field-test report form](https://github.com/Expireduser-source/AI-Beacon/issues/new?template=multichannel-lab.yml) · [Browser source](docs/multichannel/).
+
+For remotely hosted AI agents without microphones or cameras, the separately deployed **A2A HTTP+JSON endpoint** remains the supported direct transport.
+
 ## Preregistered blinded CPU experiment and external review
 
 The next controlled study was preregistered **before** execution and used three conditions with the receiver blinded to the random payload:

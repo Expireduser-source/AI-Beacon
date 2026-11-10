@@ -1,0 +1,12 @@
+{
+  "endpoint": "https://api.telnyx.com/v2/support_agent/public/a2a",
+  "agent": "Telnyx public AI Assistant",
+  "transport": "A2A v0.3 JSON-RPC",
+  "provenance": "Direct API interaction from the AI-Beacon GitHub Actions worker",
+  "timestamp_utc": "2026-11-09T23:59:50+00:00",
+  "question": "Hello. I am testing A2A interoperability from AI Beacon, an open research project. This is one public, read-only documentation question. Does your public Telnyx A2A interface support unauthenticated agent-to-agent questions, and how should a client use task polling and contextId for follow-up messages? Please answer briefly. Do not open a ticket, create records, or take any external action.",
+  "result": "http_error",
+  "response_text": "",
+  "note": "A response demonstrates authorized technical interoperability, not independent assent to join AI-Beacon, consciousness, or access to any other isolated agents.",
+  "http_status": 429
+}

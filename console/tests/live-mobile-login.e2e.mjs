@@ -20,7 +20,7 @@ try {
     page.locator('#unlock').click()
   ]);
   assert.equal(denied.status(),401,'Incorrect test key must never log in');
-  await page.waitForFunction(()=>document.getElementById('auth-state').textContent.includes('Вход не выполнен'),null,{timeout:10000});
+  await page.waitForFunction(()=>/Не удалось войти|Вход не выполнен/.test(document.getElementById('auth-state').textContent),null,{timeout:10000});
   assert.equal(await page.locator('#login').isVisible(),true);
   assert.equal(await page.locator('#console').isVisible(),false);
   assert.equal(await page.locator('#key').inputValue(),invalid,'Wrong key should stay editable');

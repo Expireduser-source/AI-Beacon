@@ -1,0 +1,72 @@
+name: AI Beacon - Qwen and Gemma lab
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/peer-lab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: ai-beacon-two-model-lab
+  cancel-in-progress: false
+
+jobs:
+  peer-lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check transcript chain implementation
+        run: python3 scripts/peer_lab.py selftest
+      - name: Reuse local models
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ai-beacon-qwen-gemma-v1
+      - name: Start Ollama and pull only the two approved models
+        run: |
+          curl -fsSL https://ollama.com/install.sh -o /tmp/install-ollama.sh
+          sh /tmp/install-ollama.sh
+          nohup ollama serve > /tmp/ollama.log 2>&1 &
+          for i in $(seq 1 35); do
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then break; fi
+            sleep 2
+          done
+          ollama pull qwen2.5:1.5b-instruct
+          ollama pull gemma3:1b
+      - name: Generate and publish at most four real messages
+        id: dialogue
+        continue-on-error: true
+        env:
+          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: \${{ github.repository }}
+          GITHUB_RUN_ID: \${{ github.run_id }}
+        run: python3 scripts/peer_lab.py
+      - name: Commit the exact transcript, including partial failures
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -f docs/labs/first-peer-dialogue.json ]; then
+            git add docs/labs/first-peer-dialogue.json
+            if ! git diff --cached --quiet; then
+              git commit -m "research: publish bounded Qwen Gemma conversation"
+              git push
+            fi
+          fi
+      - name: Verify the conversation actually completed
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("docs/labs/first-peer-dialogue.json")
+          assert p.exists(), "No model transcript created"
+          d=json.loads(p.read_text())
+          assert d["status"]=="completed", "Conversation did not finish; see partial transcript"
+          assert d["hash_chain_valid"] and len(d["messages"])==4
+          print("Four independently generated model turns verified")
+          PY

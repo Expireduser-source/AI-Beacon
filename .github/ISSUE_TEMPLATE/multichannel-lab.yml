@@ -1,0 +1,53 @@
+name: Multichannel field test (opt-in)
+description: Report a real, authorized acoustic, optical, or WebRTC device-to-device trial
+title: "[MULTICHANNEL] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share actual results only. This form is public. Never include private SDP, IP addresses, device IDs, microphone recordings, personal video, network credentials or secrets. No automatic model contact happens. Read MULTICHANNEL.md.
+  - type: dropdown
+    id: method
+    attributes:
+      label: Transport tested
+      options:
+        - Sound / acoustic FSK
+        - Color / camera
+        - WebRTC / DataChannel
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Devices and browsers
+      placeholder: "Device A: Android / Chrome; Device B: Android / Firefox"
+    validations:
+      required: true
+  - type: input
+    id: conditions
+    attributes:
+      label: Distance or network conditions (non-sensitive)
+      placeholder: "50 cm, quiet room; or local Wi-Fi without sharing private address"
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Actual transmitted and received text, or failure
+      description: "Mention exactly what arrived and whether a checksum passed. Do not mark a failed test as successful."
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: Errors, limitations and reproducibility notes
+      placeholder: "Camera permission, sample rate, interference, STUN enabled, dropped frames, etc."
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Consent and privacy
+      options:
+        - label: "I have permission to test with these devices and publish this non-sensitive account, without exposing network addresses or private media."
+          required: true

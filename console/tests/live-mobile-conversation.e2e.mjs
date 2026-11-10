@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 
-const URL='https://ai-beacon-control.yummyanime1026.workers.dev/';
+const ROOT_URL='https://ai-beacon-control.yummyanime1026.workers.dev/';
 const RUN='a8e57052-0d47-49f3-8903-d131d4f2d719';
 const KEY='0'.repeat(64);
 function setup(page){
@@ -55,7 +55,7 @@ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 try{
   const page=await browser.newPage({viewport:{width:393,height:852},isMobile:true,hasTouch:true});
   const state=setup(page);
-  const loaded=await page.goto(URL,{waitUntil:'domcontentloaded',timeout:30000});
+  const loaded=await page.goto(ROOT_URL,{waitUntil:'domcontentloaded',timeout:30000});
   assert.equal(loaded?.status(),200);
   await page.locator('#key').fill(KEY);
   await page.locator('#unlock').click();

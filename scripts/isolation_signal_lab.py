@@ -70,7 +70,7 @@ def commands(role, cpu, start, count, mode, payload=""):
         raise ValueError("Unsupported mode")
     return [
         "docker", "run", "--rm",
-        "--network", "none", "--ipc", "private", "--pid", "private",
+        "--network", "none", "--ipc", "private",
         "--read-only", "--cap-drop", "ALL",
         "--security-opt", "no-new-privileges",
         "--cpuset-cpus", str(cpu), "--memory", "128m",

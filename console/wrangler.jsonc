@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ai-beacon-control",
+  "main": "dist/worker.mjs",
+  "compatibility_date": "2026-11-10",
+  "workers_dev": true,
+  "preview_urls": false,
+  "ai": {"binding": "AI"},
+  "durable_objects": {"bindings": [{"name": "CONSOLE_STATE", "class_name": "ConsoleState"}]},
+  "migrations": [{"tag": "v1", "new_sqlite_classes": ["ConsoleState"]}],
+  "observability": {"enabled": true, "traces": {"enabled": true}},
+  "limits": {"cpu_ms": 30000}
+}

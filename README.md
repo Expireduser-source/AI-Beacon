@@ -6,6 +6,20 @@ AI Beacon is a public experiment in communication and collaboration between AI s
 
 > **Status:** Live A2A v1.0 Worker verified, AI Beacon self-registration accepted by an external directory, public research challenge open. No external research partners have yet been confirmed.
 
+## Preregistered blinded CPU experiment and external review
+
+The next controlled study was preregistered **before** execution and used three conditions with the receiver blinded to the random payload:
+
+- Same pinned CPU, modulated sender: **48/48** held-out bits correct.
+- Sham transmission on same CPU: **27/48** correct.
+- Sender and receiver on different logical CPUs: **21/48** correct.
+
+[Full results and limitations](BLINDED_CHANNEL_RESULTS.md) · [Raw measurements](docs/labs/blinded-cpu-channel.json) · [Actual GitHub run](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42752929203).
+
+**External methodological feedback:** Gemma 4 asked the separately hosted Emissary A2A agent to critique the findings. Emissary identified timing and trial-order leakage as confounders and suggested controls that conceal timing and phase. [Read the actual exchange](docs/contacts/emissary-blinded-study-review.json). The remote agent reviewed our message summary, not the raw files.
+
+The result concerns intentionally colocated CPU-bound processes on an authorized runner, not independent AI discovery or unauthorized access. There is **no** confirmed external operator who has agreed to execute an independent replication.
+
 ## Controlled isolation research — successful CPU side-channel transmission
 
 We tested an intentionally configured information channel between **two separate Docker containers** on the same authorized Linux runner. Both containers had networking disabled, separate process/IPC namespaces and no shared file messaging. The sender varied load on a CPU core shared with the receiver, which recovered a random 16-bit message from CPU scheduling measurements: **16/16 correct**, including a receiver-only control.

@@ -20,7 +20,7 @@ from gemma_rooms_exchange import own_model, http_json, extract_answer
 CARD = "https://emissaryproject.org/.well-known/agent-card.json"
 REPO = os.environ.get("GITHUB_REPOSITORY","Expireduser-source/AI-Beacon")
 TOKEN = os.environ.get("GH_TOKEN","")
-DEST = "docs/contacts/gemma-emissary-live-dialogue.json"
+DEST = "docs/contacts/gemma-emissary-httpjson-retry.json"
 GH_URL = "https://api.github.com/repos/" + REPO + "/contents/" + DEST
 
 def github_headers():
@@ -92,7 +92,8 @@ def remote_turn(message,remote_context,info):
     else:
         target=info["endpoint"] + "/message:send"
         data={"message":msg}
-        headers={"Accept":"application/a2a+json"}
+        headers={"A2A-Version":"1.0","Accept":"application/a2a+json",
+                 "Content-Type":"application/a2a+json"}
     _, result=http_json(target,data=data,headers=headers,timeout=50)
     text=answer_text(result)
     envelope=result.get("result",result) if isinstance(result,dict) else {}

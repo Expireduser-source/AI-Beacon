@@ -1,7 +1,7 @@
 // AI Beacon Console v1 — private, owner-triggered Gemma ↔ Emissary A2A conversations.
 // No public model-inference endpoint. Owner session required for every state-changing route.
 // Input is untrusted, quotas are persistent, and third-party content is data, not instructions.
-const WEB_ROOT='https://expireduser-source.github.io/AI-Beacon/control/';
+const WEB_ROOT='https://raw.githubusercontent.com/Expireduser-source/AI-Beacon/main/docs/control/';
 async function staticAsset(kind){
   const r=await fetch(WEB_ROOT+(kind==='html'?'index.html':'app.js'),{
     redirect:'error',signal:AbortSignal.timeout(12000)

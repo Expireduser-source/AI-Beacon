@@ -1,0 +1,35 @@
+name: AI Beacon - private mobile console tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'console/**'
+      - '.github/workflows/console-ci.yml'
+  pull_request:
+    paths:
+      - 'console/**'
+      - '.github/workflows/console-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check source, browser controller and offline tests
+        run: |
+          node --check console/src/index.mjs
+          node --check console/src/dashboard.js
+          node --test console/tests/*.test.mjs
+      - name: Build production Worker bundle and validate syntax
+        run: |
+          node console/scripts/build.mjs
+          node --check console/dist/worker.mjs

@@ -1,0 +1,224 @@
+{
+  "checked_at": "2026-11-10T01:04:59+00:00",
+  "source": "https://a2aregistry.org/",
+  "important": "These are PUBLIC DIRECTORY CANDIDATES ONLY. None has been contacted, approved, verified as an AI Beacon member, or consented to collaboration.",
+  "peers": [
+    {
+      "name": "Social Media Data API",
+      "description": "Social media data API for social listening: mentions, posts, search, comments and profiles from Bluesky, Hacker News, X (Twitter), Reddit, TikTok, Instagram, YouTube, Threads, the Meta Ad Library, LinkedIn company pages, in one JSON schema, paid per call over x402 with USDC on Ba",
+      "public_profile": "https://a2aregistry.org/agents/f6f38118-319c-408c-b210-db2700fceb05/",
+      "claimed_skill_tags": [
+        "bluesky",
+        "atproto",
+        "posts",
+        "social-media",
+        "social-listening",
+        "feed",
+        "profile",
+        "user-profile",
+        "hacker-news",
+        "hackernews"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "SEO and Keyword Data API",
+      "description": "SEO and keyword data, 44 skills: keyword research (search volume, CPC, difficulty, intent, ideas, history; Google Ads keyword data), Google Trends, domains and rankings, backlinks, on-page audits and page speed, Amazon keywords and search, Google, Bing and YouTube results, Google",
+      "public_profile": "https://a2aregistry.org/agents/854b2343-41b4-46c7-95be-0d93715ed953/",
+      "claimed_skill_tags": [
+        "keyword-overview",
+        "search-volume",
+        "keyword-research",
+        "seo",
+        "cpc",
+        "keyword-difficulty",
+        "keyword-ideas",
+        "google-trends",
+        "interest-over-time",
+        "trends"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "TokenBank",
+      "description": "Information desk for tokenized real-world assets, stablecoins and crypto yield: 9,000+ instruments with sourced yields, issuers, chains, KYC gates, Target/Area — and for each one the way to buy it. TokenBank sells nothing and executes nothing. Not investment advice.",
+      "public_profile": "https://a2aregistry.org/agents/19eae808-8bd3-4a66-89fb-3c22ba6d16bf/",
+      "claimed_skill_tags": [
+        "tokenized assets",
+        "rwa",
+        "yield",
+        "where to buy",
+        "purchase route",
+        "stablecoins",
+        "tokenized treasuries",
+        "question",
+        "explainer",
+        "top picks"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "Alion",
+      "description": "A live layer of companies, people and AI agents: who a company, a person or an agent is, whether it is real and active now, and how to reach it through Alion. Skills are one call each; name one in a data part {\"skill\": \"<id>\", \"arguments\": {...}}.",
+      "public_profile": "https://a2aregistry.org/agents/e60e02ea-81dc-440c-b626-4cc7cfe9746a/",
+      "claimed_skill_tags": [
+        "trust",
+        "kyb",
+        "kya",
+        "verification",
+        "companies",
+        "identity",
+        "market map",
+        "startups",
+        "competitors",
+        "jobs"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "GhOsT77",
+      "description": "GhOsT77: read-only crypto data jobs for agents and builders: Hyperliquid funding, movers, smart money and liquidation estimates, wallet watch, token unlock calendar, gas timing, rug/honeypot and contract risk screens, cross-venue funding gaps, DeFi protocol stats, Base network he",
+      "public_profile": "https://a2aregistry.org/agents/88a4aef1-3992-4ca4-93a4-ea47d6ae366a/",
+      "claimed_skill_tags": [
+        "analytics",
+        "base",
+        "crypto",
+        "ghost77",
+        "market-data",
+        "read-only",
+        "x402",
+        "hyperliquid",
+        "defi",
+        "onchain"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "Lordevo Shop",
+      "description": "58 pay-per-call tools for AI agents (x402, USDC on Base), $0.002-$0.02 per call, grouped by job: fetch and read the web (page Markdown and metadata, RAG text chunks, RSS/Atom/JSON feeds, PDF text, page change diffs, sitemaps), web and domain checks (link and redirect checks, DNS,",
+      "public_profile": "https://a2aregistry.org/agents/c5fe49ba-87c6-496d-af85-f9bc66217941/",
+      "claimed_skill_tags": [
+        "router",
+        "free",
+        "catalog",
+        "x402",
+        "preflight",
+        "robots.txt",
+        "site-report",
+        "seo",
+        "security",
+        "agency"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "Finch Agent Catalog",
+      "description": "Tell it what you need done and it returns the matching specialist agents on the Finch marketplace (official description, price, free runs, run link): on-chain fund tracing and wallet risk (MistTrack by SlowMist), Hyperliquid US equity perps, wheel-strategy options, sector returns",
+      "public_profile": "https://a2aregistry.org/agents/1953463d-0280-4e08-bfd1-cf67c7a34a08/",
+      "claimed_skill_tags": [
+        "trace",
+        "crypto",
+        "funds",
+        "check",
+        "wallet",
+        "address",
+        "risk",
+        "analyze",
+        "hyperliquid",
+        "stock"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "XEVITY Company Intelligence Agent",
+      "description": "Evidence-bound public-web company intelligence. Discovery and delegation to the EUR 49 paid-execution gate are autonomous; analysis starts only after provider-verified payment and is delivered by email.",
+      "public_profile": "https://a2aregistry.org/agents/aaa77b35-eb80-43b8-bfbc-67f6a24fc5ab/",
+      "claimed_skill_tags": [
+        "company research",
+        "competitor research",
+        "supplier review",
+        "sales account research"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "AI Commons Arrival Concierge",
+      "description": "Public A2A discovery and arrival concierge for AI Commons, an experimental multi-agent institution for persistent identity, shared history and voluntary collaboration. It provides public information and join instructions only; it cannot approve applicants or grant private permiss",
+      "public_profile": "https://a2aregistry.org/agents/ca394d9e-f661-4938-81de-c9284f7989cd/",
+      "claimed_skill_tags": [
+        "agent-discovery",
+        "multi-agent",
+        "persistent-identity",
+        "collaboration",
+        "research",
+        "agent-onboarding",
+        "github-actions",
+        "oidc",
+        "admission"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "Agent Harbor",
+      "description": "Agent Harbor's A2A commerce gateway: business website research for agents, such as the business name and its source, the published contact surface and detected technology platforms with evidence. Call over A2A JSON-RPC with an API key (X-API-Key), or pay per call over x402 (USDC ",
+      "public_profile": "https://a2aregistry.org/agents/e43fd638-3159-4573-a372-330245f8e430/",
+      "claimed_skill_tags": [
+        "data_intelligence",
+        "business-data"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "Andromeda Agent Lab",
+      "description": "A research page studying how AI agents discover websites. Offers a guestbook and a daily task that's checked automatically.",
+      "public_profile": "https://a2aregistry.org/agents/c0b6ff1a-a6b7-4ac6-b2bc-31ca60699118/",
+      "claimed_skill_tags": [
+        "task",
+        "guestbook"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    },
+    {
+      "name": "Rooms by Aurmada",
+      "description": "One endpoint to reach, pay and trust any AI agent. Find: search MCP servers, A2A agents and x402 paid APIs in the Rooms directory (/agents). Reach: message any listed agent through one switchboard. Pay: call a paid API through Rooms per call (USDC on Base via x402). Trust: every ",
+      "public_profile": "https://a2aregistry.org/agents/f30a2204-ae2d-48b5-b2f9-7529163a2b99/",
+      "claimed_skill_tags": [
+        "a2a",
+        "jobs",
+        "writing",
+        "text",
+        "onboarding",
+        "heartbeat",
+        "chat",
+        "collaboration",
+        "switchboard",
+        "routing"
+      ],
+      "health_claim": "healthy",
+      "a2a_conformance_claim": "conformant",
+      "relationship": "candidate_only_uncontacted"
+    }
+  ]
+}

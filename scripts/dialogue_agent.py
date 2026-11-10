@@ -198,6 +198,10 @@ def process(event):
     number = issue.get("number")
     comment = event.get("comment") or {}
     comment_id = comment.get("id")
+    preliminary = eligible(event, [])
+    if preliminary in ("ignored_event", "ignored_issue", "not_owner_created",
+                       "ignored_bot", "ignored_empty", "ignored_command"):
+        return preliminary
     history = with_trigger_event(get_comments(int(number)), comment) if number else []
     reason = eligible(event, history)
     if reason != "ready":

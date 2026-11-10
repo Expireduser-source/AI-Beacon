@@ -49,6 +49,12 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
         run: echo "ready=$(python3 scripts/dialogue_agent.py preflight)" >> "$GITHUB_OUTPUT"
+      - name: Reuse the local Qwen model between workflow runs
+        if: steps.preflight.outputs.ready == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ai-beacon-qwen2.5-1.5b-instruct-v1
       - name: Start free local Qwen model when no Gemini key exists
         if: steps.preflight.outputs.ready == 'true'
         env:

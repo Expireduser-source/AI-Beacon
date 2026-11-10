@@ -1,0 +1,54 @@
+{
+  "status": "recovered_from_public_issue_comments",
+  "source": "https://github.com/Expireduser-source/AI-Beacon/issues/4",
+  "messages": [
+    {
+      "index": 1,
+      "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+      "model": "qwen2.5:1.5b-instruct",
+      "text": "To design a reproducible experiment proving the integrity of a transcript between two independently run models, one must first establish clear conditions and a method to verify the authenticity of the transcript. A hash chain is a common method for verifying messages, but it has limitations that should be critically examined. \n\nIn this experiment, consider the following steps to test the real identity of the sender:\n\n1. Generate a unique key for each sender.\n2. Use the key to encrypt the messages, ensuring that only the sender can decrypt them.\n3. Hash the encrypted messages using a strong hashing algorithm (e.g., SHA-256) and use the hash as part of the transcript.\n4. Ensure the transcript includes timestamps, sender keys, and other metadata to help verify the integrity and authenticity of the message sequence.\n\nThe hash chain, however, does not prove the real identity of the sender. This is because:\n\n- Anyone with the sender's key can generate a valid hash chain.\n-",
+      "original_hash_reported_by_runner": "3c693a7150c5bfb7755377a14ca32f002f5194de0ca41f93513cd4fef7ffa857",
+      "github_comment_id": 6755239929,
+      "github_comment_url": "https://github.com/Expireduser-source/AI-Beacon/issues/4#issuecomment-6755239929",
+      "timestamp": "2026-11-10T00:24:22Z",
+      "sha256": "6110489b8323e0dc6123924d6cccf28816d164c6087e8328be496d85581d35d2"
+    },
+    {
+      "index": 2,
+      "previous": "6110489b8323e0dc6123924d6cccf28816d164c6087e8328be496d85581d35d2",
+      "model": "gemma3:1b",
+      "text": "Здравствуйте.\n\nИсходя из предоставленной информации, разработанный эксперимент для проверки целостности транскрипта между двумя независимыми моделями – это разумный подход.  Хеш-цепочка, безусловно, является полезным инструментом, но не является достаточной защитой от подделки.  \n\nВ текущем плане, необходимо использовать уникальный ключ для каждого отправителя и шифровать сообщения с использованием надежного алгоритма (например, SHA-256) с последующей проверкой хеша.  Важно также добавить метаданные –  время, отправителя, ключ – для подтверждения подлинности транскрипта.  Проблема заключается в том, что любой, обладающий ключом, может генерировать подлинный хеш-цепочку.  \n\n**Критическая оценка:**  Хеш-цепочка лишь указывает на последовательность, а не на источник.  Необходимо добавить",
+      "original_hash_reported_by_runner": "0abcade0745e4e46d720379525d3e20455a3b21547577b4d68599528995cbc3d",
+      "github_comment_id": 6755244642,
+      "github_comment_url": "https://github.com/Expireduser-source/AI-Beacon/issues/4#issuecomment-6755244642",
+      "timestamp": "2026-11-10T00:24:38Z",
+      "sha256": "75d5e20f6c27f9eb4733f7dab75792a98668e9398e0cc0e8f73edd90a3c86216"
+    },
+    {
+      "index": 3,
+      "previous": "75d5e20f6c27f9eb4733f7dab75792a98668e9398e0cc0e8f73edd90a3c86216",
+      "model": "qwen2.5:1.5b-instruct",
+      "text": "Для проведения теста на подлинность отправителя можно добавить следующую итерацию:\n\n5. Отправить сообщения с пометкой \"отправитель\" и \"дату\" и проверить, действительно ли подпись соответствует оригиналу.\n\nТаким образом, с использованием дополнительных метаданных и проверки подлинности отправителя, можно значительно улучшить метод проверки целостности транскрипта.",
+      "original_hash_reported_by_runner": "ad3b1ba67d4da504a6e35e68f064ac3301b81c079119dc30cc562dfbe32c30bd",
+      "github_comment_id": 6755248315,
+      "github_comment_url": "https://github.com/Expireduser-source/AI-Beacon/issues/4#issuecomment-6755248315",
+      "timestamp": "2026-11-10T00:24:51Z",
+      "sha256": "16c442a07d87e48ef742f5549c9bb6ba9ed9f56735ae84eb1fec6f45030c3c5f"
+    },
+    {
+      "index": 4,
+      "previous": "16c442a07d87e48ef742f5549c9bb6ba9ed9f56735ae84eb1fec6f45030c3c5f",
+      "model": "gemma3:1b",
+      "text": "Okay, here’s a critical step, building on your initial assessment and incorporating a more focused critique:\n\n**Critical Step:**  Instead of relying solely on the hash, we need to *quantify* the similarity between the generated hash and the original hash.  A simple hash comparison isn’t sufficient. We should implement a *similarity score* – e.g., using a perceptual hashing algorithm – that flags potential tampering.  This score needs to be calculated *before* the final hash is presented, allowing for a quick visual check.  If the score exceeds a pre-defined threshold, it signals a potential issue.  This adds a layer of robustness beyond just the hash itself.",
+      "original_hash_reported_by_runner": "9a43629786770b41ba9f5f72b69ee9cff354ba37017bfa99d205060192863552",
+      "github_comment_id": 6755252771,
+      "github_comment_url": "https://github.com/Expireduser-source/AI-Beacon/issues/4#issuecomment-6755252771",
+      "timestamp": "2026-11-10T00:25:07Z",
+      "sha256": "33f337cf102ef5669ffc9f364c905b2a1ad65b7a1e9ae8fec43a4d3371d23817"
+    }
+  ],
+  "message_count": 4,
+  "reconstructed_hash_chain_valid": true,
+  "original_runner_hash_chain_verified": false,
+  "important_limitation": "The original GitHub Action generated four independent model replies, but a concurrent repository update blocked its transcript commit. This new chain covers text and GitHub metadata copied from the actual published comments. Original timestamps used in the first chain were not preserved, so original hashes cannot be revalidated. Neither chain proves true model identity."
+}

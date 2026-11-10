@@ -86,8 +86,15 @@ async function payload(request) {
 }
 function scrubOutput(raw){
   if(typeof raw==='string')return raw.trim().slice(0,1600);
+  if(Array.isArray(raw)){
+    for(const item of raw){const found=scrubOutput(item);if(found)return found;}
+    return '';
+  }
   if(!raw||typeof raw!=='object')return '';
-  for(const k of ['response','output','text','answer','result']){
+  const choices=raw.choices;
+  const first=Array.isArray(choices)?choices[0]?.message?.content:null;
+  if(typeof first==='string'&&first.trim())return first.trim().slice(0,1600);
+  for(const k of ['response','output','text','answer','result','content']){
     if(typeof raw[k]==='string'&&raw[k].trim())return raw[k].trim().slice(0,1600);
     if(raw[k]&&typeof raw[k]==='object'){const text=scrubOutput(raw[k]);if(text)return text;}
   }
@@ -169,7 +176,9 @@ async function askGemma(env,history,topic){
 }
 function normalizeRun(run){
   return {id:run.id,topic:run.topic,started_at:run.started_at,updated_at:run.updated_at,
-    status:run.status,turns:run.turns,active:run.active||false,error:run.error||null};
+    status:run.status,stage:run.stage||null,
+    draft_gemma:run.draftGemma||null,
+    turns:run.turns,active:run.active||false,error:run.error||null};
 }
 function emptyState(){
   return {day:utcDay(),count:0,lastStart:0,run:null};
@@ -207,7 +216,7 @@ export class ConsoleState {
       s.count++;
       s.lastStart=now();
       s.run={id:crypto.randomUUID(),topic,started_at:now(),updated_at:now(),
-        status:'running',active:false,turns:[],error:null};
+        status:'running',stage:'queued',draftGemma:null,active:false,turns:[],error:null};
       this.write(s);
       return jsonResponse({run:normalizeRun(s.run),used:s.count,limit:DAILY_LIMIT});
     }
@@ -219,8 +228,22 @@ export class ConsoleState {
       if(run.active && now()-run.active_at<85000)return fail(409,'Раунд уже выполняется.');
       const nonce=crypto.randomUUID();
       run.active=true;run.active_at=now();run.lease=nonce;run.updated_at=now();
+      run.stage='generating';
+      run.draftGemma=null;
       this.write(s);
       return jsonResponse({lease:nonce,topic:run.topic,turns:run.turns});
+    }
+    if(action==='/progress'){
+      const run=s.run;
+      if(!run||run.id!==body.runId||run.lease!==body.lease||!run.active)
+        return fail(409,'Устаревшая запись прогресса.');
+      if(body.phase!=='contacting_emissary'||typeof body.gemma!=='string'||body.gemma.length>1100)
+        return fail(400,'Неверный этап диалога.');
+      run.stage='contacting_emissary';
+      run.draftGemma=body.gemma;
+      run.updated_at=now();
+      this.write(s);
+      return jsonResponse({ok:true});
     }
     if(action==='/complete'){
       const run=s.run;
@@ -233,6 +256,8 @@ export class ConsoleState {
       run.turns.push({round:run.turns.length+1,gemma:turn.gemma,emissary:turn.emissary,
         received_at:now(),emissary_context:typeof turn.context==='string'?turn.context:null});
       run.active=false;run.lease=null;run.updated_at=now();
+      run.stage=run.turns.length>=MAX_ROUNDS?'completed':'ready_for_followup';
+      run.draftGemma=null;
       if(run.turns.length>=MAX_ROUNDS)run.status='completed';
       this.write(s);
       return jsonResponse({run:normalizeRun(run)});
@@ -240,7 +265,7 @@ export class ConsoleState {
     if(action==='/fail'){
       const run=s.run;
       if(!run||run.id!==body.runId||run.lease!==body.lease)return fail(409,'Устаревший запрос.');
-      run.status='failed';run.active=false;run.lease=null;run.updated_at=now();
+      run.status='failed';run.stage='failed';run.active=false;run.lease=null;run.updated_at=now();
       run.error=String(body.error||'Не удалось завершить диалог.').slice(0,170);
       this.write(s);
       return jsonResponse({run:normalizeRun(run)});
@@ -320,6 +345,8 @@ export default {
       let gemma='';
       try{
         gemma=await askGemma(env,turns,topic);
+        const noted=await room(env,'/progress',{runId,lease:lock,phase:'contacting_emissary',gemma});
+        if(noted.status!==200)throw new Error('Не удалось зафиксировать вопрос Gemma.');
         await verifyRemoteCard();
         const last=turns.at(-1);
         const remote=await callRemote(gemma,last?.emissary_context||null);

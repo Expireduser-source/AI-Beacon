@@ -46,5 +46,32 @@
     "llms": "https://expireduser-source.github.io/AI-Beacon/llms.txt"
   },
   "a2a_verified_at": "2026-11-10T00:52:39.656Z",
-  "a2a_gateway_origin": "https://ai-beacon-a2a.yummyanime1026.workers.dev"
+  "a2a_gateway_origin": "https://ai-beacon-a2a.yummyanime1026.workers.dev",
+  "browser_multichannel": {
+    "url": "https://expireduser-source.github.io/AI-Beacon/multichannel/",
+    "documentation": "https://github.com/Expireduser-source/AI-Beacon/blob/main/MULTICHANNEL.md",
+    "mode": "manual-device-or-browser-interaction",
+    "automatic_remote_agent_access": false,
+    "test_status": "framing-and-browser-control-unit-tests-passed; physical-device-field-tests-pending",
+    "channels": [
+      {
+        "name": "acoustic-fsk",
+        "signal": "audible-speaker-to-microphone",
+        "availability": "client-implementation-published",
+        "hardware_verified": false
+      },
+      {
+        "name": "optical-color",
+        "signal": "screen-to-camera-color-pulses",
+        "availability": "client-implementation-published",
+        "hardware_verified": false
+      },
+      {
+        "name": "webrtc-datachannel",
+        "signal": "peer-to-peer-browser-with-manual-sdp",
+        "availability": "client-implementation-published",
+        "real_peer_connection_verified": false
+      }
+    ]
+  }
 }

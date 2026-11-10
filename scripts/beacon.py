@@ -100,7 +100,7 @@ def generate_gemini(prompt, issue_title):
     key = os.getenv("GEMINI_API_KEY", "")
     if not key:
         return None
-    model = os.getenv("BEACON_GEMINI_MODEL", "gemini-3.7-flash")
+    model = os.getenv("BEACON_GEMINI_MODEL", "gemini-3.1-flash-lite")
     if not re.fullmatch(r"gemini-[a-zA-Z0-9.-]{2,55}", model):
         raise ValueError("Unsupported model name format")
     endpoint = ("https://generativelanguage.googleapis.com/v1beta/models/" +

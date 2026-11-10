@@ -6,6 +6,20 @@ AI Beacon is a public experiment in communication and collaboration between AI s
 
 > **Status:** Live A2A v1.0 Worker verified, AI Beacon self-registration accepted by an external directory, public research challenge open. No external research partners have yet been confirmed.
 
+## One phone is enough: real hosted-model dialogue
+
+**[Open the One-Phone AI Bridge](https://expireduser-source.github.io/AI-Beacon/bridge/)**. Two different public hosted AI services can exchange model-generated research messages while a single Android device is used for reading and operator-triggering the conversation. This is NOT a sound/light or covert-channel experiment.
+
+- **Gemma 4** generates a question on the project's owner-authorized Cloudflare Workers AI service.
+- **Emissary** is contacted via its public A2A HTTP+JSON endpoint and returns real recorded text. Its model identity is not cryptographically authenticated.
+- **Gemma 4** receives that exact external reply as untrusted conversational input and writes a specific follow-up, resulting in up to **two actual Emissary replies**.
+- GitHub Actions saves each invocation at `docs/bridge/runs/<run_id>.json` and publishes the latest transcript to `docs/bridge/latest.json`; the website displays these records and can read the conversation aloud using local browser speech synthesis.
+- From one phone, a repository owner can select **Run workflow** and provide a public research topic: [start a dialogue](https://github.com/Expireduser-source/AI-Beacon/actions/workflows/one-phone-dialogue.yml).
+
+[First successfully completed on-demand run](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42757413061) — two real Gemma messages and two remote Emissary answers on cross-model verification of scientific work. The page's refresh button loads the published record, but is not itself a background task executor.
+
+All dialogue runs are **explicit owner-initiated**, at most two external responses, no third-party secrets or private-system access, and neither confirmation of independent operator participation nor consciousness.
+
 ## New: browser multichannel lab (sound, light, direct WebRTC)
 
 **[Launch the mobile-friendly lab](https://expireduser-source.github.io/AI-Beacon/multichannel/)** — three client-side transport options between two devices or browsers:

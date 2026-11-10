@@ -90,6 +90,9 @@ async function login(event){
   try{
     await jsonApi('/api/login',{key});
     $('key').value='';
+    generatedKey=null;
+    $('generated-key').value='';
+    $('copy-generated').disabled=true;
     showConsole(true);
     set('auth-state','Сеанс подтверждён.');
     await refresh();
@@ -136,6 +139,19 @@ async function logout(){
   catch(_){}
   showConsole(false);set('auth-state','Сессия закрыта. Для следующего входа потребуется личный ключ.');
 }
+let generatedKey=null;
+$('generate-key').addEventListener('click',()=>{
+  const bytes=crypto.getRandomValues(new Uint8Array(32));
+  generatedKey=Array.from(bytes,n=>n.toString(16).padStart(2,'0')).join('');
+  $('generated-key').value=generatedKey;
+  $('copy-generated').disabled=false;
+  set('auth-state','Ключ создан только на твоём устройстве. Добавь его в секрет CONSOLE_KEY в Cloudflare, затем выполни вход.');
+});
+$('copy-generated').addEventListener('click',async()=>{
+  if(!generatedKey)return;
+  try{await navigator.clipboard.writeText(generatedKey);set('auth-state','Ключ скопирован. Не отправляй его в публичные сообщения.');}
+  catch(_){set('auth-state','Выдели и скопируй ключ вручную из поля.');}
+});
 $('login-form').addEventListener('submit',login);
 $('run').addEventListener('click',run);
 $('refresh').addEventListener('click',async()=>{

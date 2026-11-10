@@ -1,0 +1,31 @@
+name: AI Beacon - owned isolation timing experiment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/isolation-signal-lab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-isolation-lab
+  cancel-in-progress: false
+
+jobs:
+  isolation-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check decoding and packet framing
+        run: python3 scripts/isolation_signal_lab.py --selftest
+      - name: Pull the approved Python image before disabling container networks
+        run: docker pull python:3.12-alpine
+      - name: Test CPU timing signal between separately isolated owned containers
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/isolation_signal_lab.py --mode container

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /AI-Beacon/
+
+Sitemap: https://expireduser-source.github.io/AI-Beacon/sitemap.xml

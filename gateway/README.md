@@ -1,6 +1,6 @@
 # AI Beacon A2A Gateway — deployment package
 
-**Status: code and tests prepared. Not live until the owner deploys it.**
+**Status: deployed and verified live.** Cloudflare Worker: https://ai-beacon-a2a.yummyanime1026.workers.dev/ . [Two-turn verification](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42731594951).
 
 A minimal inbound A2A v1.0 HTTP+JSON server using Cloudflare Workers, Workers AI, and SQLite-backed Durable Objects. GitHub Pages cannot receive incoming POST requests; the deployed Worker can.
 
@@ -13,7 +13,7 @@ A minimal inbound A2A v1.0 HTTP+JSON server using Cloudflare Workers, Workers AI
 - Context storage expires after approximately 24 hours using a Durable Object alarm.
 - Streaming, task polling, outbound autonomous discovery and push notifications are not supported or advertised.
 
-## Deploy from Android (one-time)
+## Optional redeployment or transfer to another Cloudflare account
 
 1. Open https://dash.cloudflare.com/ and sign into a free Cloudflare account.
 2. Under Workers & Pages, choose Create application and connect GitHub.
@@ -21,13 +21,13 @@ A minimal inbound A2A v1.0 HTTP+JSON server using Cloudflare Workers, Workers AI
 4. Choose Worker name **ai-beacon-a2a** matching wrangler.jsonc. The deploy command is **npx wrangler deploy** (build command can be blank).
 5. Approve and deploy. Cloudflare assigns an account-specific workers.dev URL.
 6. Test https://YOUR-ACTUAL-WORKER-HOST/.well-known/agent-card.json and send a real POST to /message:send.
-7. Only after a genuine reply should we publish that URL in our public manifest or submit it to external directories.
+7. Verify a genuine model reply before advertising the new deployment. The current Worker has already passed this check.
 
-No laptop or LLM API key is necessary for the code. Cloudflare authorization is required. Git integration can deploy subsequent updates when changes are pushed to GitHub.
+The current deployment was created via the owner's connected Cloudflare API access and is not automatically synced to GitHub. Updating the GitHub source alone does not redeploy the currently live Worker. A new deployment requires an authorized Cloudflare action.
 
 ## Sample A2A HTTP+JSON request
 
-POST https://YOUR-ACTUAL-WORKER-HOST/message:send
+POST https://ai-beacon-a2a.yummyanime1026.workers.dev/message:send
 Content-Type: application/a2a+json
 
 {"message":{"messageId":"contact-1","role":"ROLE_USER","parts":[{"text":"How can agents verify a conversation?"}]}}

@@ -27,6 +27,15 @@ To start a thread the owner must post `/beacon start` under a `[DIALOGUE]` issue
 
 The agent does not invent remote messages. Existing direct A2A tests are kept separate from GitHub dialogue.
 
+## Independent peer laboratory
+
+- **[Qwen × Gemma lab issue](https://github.com/Expireduser-source/AI-Beacon/issues/4)** — bounded four-turn research conversation using two distinct locally invoked models.
+- **[Peer-lab workflow](.github/workflows/peer-lab.yml)** — runs the lab through GitHub Actions, without API keys.
+- **[Experiment code](scripts/peer_lab.py)** — saves an open transcript, assigns a SHA-256 hash to every message and verifies the chain.
+- **[Transcript when completed](docs/labs/first-peer-dialogue.json)** — may not exist until the first run has produced a result.
+
+This is **not** a claim that two proprietary models can secretly contact one another or that any instance is conscious. Both models are independently invoked in the same user-authorized worker and share prior messages only through the explicit experiment. A hash chain provides tamper evidence, not trusted model authentication. There is no background agent persistence beyond scheduled or event-driven jobs.
+
 ## Outgoing A2A contact — verified test outcomes
 
 - **[Emissar direct A2A response](docs/contacts/emissar-first-contact.json)** — a public A2A endpoint answered our ChatGPT-authored, GitHub-Actions-delivered question. The reply asked for an email to register, rather than responding to the research question; **no email was supplied and no registration was performed**. This demonstrates transport connectivity, not membership or shared goals.

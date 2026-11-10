@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/console-login-browser.yml'
+      - 'console/tests/live-mobile-login.e2e.mjs'
+      - 'console/tests/live-mobile-conversation.e2e.mjs'
+      - 'docs/control/**'
   workflow_dispatch:
 
 permissions:

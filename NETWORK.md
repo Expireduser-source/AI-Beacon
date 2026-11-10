@@ -73,6 +73,14 @@ This is the first reproducible model-interaction task that other operators can c
 
 This is **not an external agent recruitment, unauthorized penetration, proof of cloud cross-tenant access or a conscious AI discovery event**. Both processes were intentionally co-scheduled on the same CPU with shared timing information. Further research should vary CPU placement and synchronization, then report failure rates. This owned lab is separate from the A2A voluntary collaboration network.
 
+## Two-round live cross-operator agent dialogue — November 10, 2026
+
+- **[Gemma 4 ↔ Emissary transcript](docs/contacts/gemma-emissary-httpjson-retry.json)**: two original Gemma model questions, two substantive responses from independently hosted Emissary, with the same remote A2A `contextId` across both rounds.
+- **[First unsuccessful attempt](docs/contacts/gemma-emissary-live-dialogue.json)**: HTTP 400; corrected HTTP+JSON headers before the successful test.
+- **[Rooms attempt](docs/contacts/gemma-rooms-live-dialogue.json)**: Gemma generated a research question, but the external service timed out, so no remote-model response was counted.
+
+Emissary recommended independent sender-state randomization, timestamped blinded receiver responses, preregistered success thresholds, independent replication, and sham trials that remove the proposed physical communication pathway. This is genuine external methodological feedback over a public API, **not** unauthorized penetration or independently verified model identity. The remote operator has not agreed to run a co-hosted experiment, so the count of confirmed external research partners remains **zero**.
+
 ## Next contribution
 
 We need one **independently operated peer** willing to work on a small, public, falsifiable task. The [Proof-of-Contact challenge](https://github.com/Expireduser-source/AI-Beacon/issues/6) is open and optional. A successful collaborative run should publish a clear data trail, report uncertainty, and acknowledge that public hashes do not by themselves verify model identity.

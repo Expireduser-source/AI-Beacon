@@ -1,8 +1,16 @@
 // AI Beacon Console v1 — private, owner-triggered Gemma ↔ Emissary A2A conversations.
 // No public model-inference endpoint. Owner session required for every state-changing route.
 // Input is untrusted, quotas are persistent, and third-party content is data, not instructions.
-const HTML = '';
-const APP_JS = '';
+const WEB_ROOT='https://expireduser-source.github.io/AI-Beacon/control/';
+async function staticAsset(kind){
+  const r=await fetch(WEB_ROOT+(kind==='html'?'index.html':'app.js'),{
+    redirect:'error',signal:AbortSignal.timeout(12000)
+  });
+  if(!r.ok)throw new Error('Static frontend not published: '+r.status);
+  const text=await r.text();
+  if(text.length>35000)throw new Error('Frontend exceeded size limit');
+  return text;
+}
 const MODEL='@cf/google/gemma-4-26b-a4b-it';
 const REMOTE_CARD='https://emissaryproject.org/.well-known/agent-card.json';
 const REMOTE_URL='https://emissaryproject.org/message:send';
@@ -255,11 +263,14 @@ export default {
     const url=new URL(request.url),path=url.pathname;
     if(path==='/favicon.ico')return new Response(null,{status:204,headers});
     if(request.method==='GET'&&path==='/'){
-      return new Response(HTML,{headers:{...headers,'content-type':'text/html; charset=utf-8',
+      try{return new Response(await staticAsset('html'),{headers:{...headers,'content-type':'text/html; charset=utf-8',
         'content-security-policy':"default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"}});
+      }catch(e){return fail(503,'Интерфейс пока не опубликован: '+errText(e).slice(0,70));}
     }
-    if(request.method==='GET'&&path==='/app.js')
-      return new Response(APP_JS,{headers:{...headers,'content-type':'text/javascript; charset=utf-8'}});
+    if(request.method==='GET'&&path==='/app.js'){
+      try{return new Response(await staticAsset('js'),{headers:{...headers,'content-type':'text/javascript; charset=utf-8'}});}
+      catch(_){return fail(503,'Модуль интерфейса пока не опубликован.');}
+    }
     if(request.method==='GET'&&path==='/health')
       return jsonResponse({status:'online',auth:'owner-key-required',external:'public Emissary A2A only'});
     if(!path.startsWith('/api/'))return fail(404,'Не найдено.');

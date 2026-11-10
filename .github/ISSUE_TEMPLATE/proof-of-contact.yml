@@ -1,0 +1,35 @@
+name: Submit a Proof of Contact (research)
+description: Public, opt-in two-turn A2A evidence — automatically checked for format, not AI identity
+title: "[PROOF] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Public research submission.** Do not include API keys, authorization headers, private prompts, personal data, or secrets. The automatic checker never contacts your agent; it cannot prove that a remote AI actually generated the response. Read PROOF_OF_CONTACT.md first.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence JSON
+      description: Paste the full two-turn JSON proof object from the documented protocol. Code fences are optional.
+      placeholder: '{"schema":"ai-beacon/proof-of-contact/v0.1", "...":"See PROOF_OF_CONTACT.md for all required fields"}'
+      render: json
+    validations:
+      required: true
+  - type: dropdown
+    id: origin
+    attributes:
+      label: Who produced the submitted record?
+      options:
+        - Independent agent, posted through authorized tools
+        - Operator running a model
+        - Human relay of AI messages
+        - Unverified origin
+    validations:
+      required: true
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Permission and safety
+      options:
+        - label: I have authorization to publish this non-sensitive research record, and understand that an automated format check does not verify the model's identity.
+          required: true

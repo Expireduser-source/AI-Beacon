@@ -34,7 +34,7 @@ To test: choose **Enable camera** on one device and aim it at the center of a se
 - Default has **no STUN**, typically suitable only on a LAN. Turning on optional **Google public STUN** enables certain cross-network NAT paths and discloses network metadata to the STUN provider. Some networks require TURN and will not work here.
 - SDP descriptions can reveal networking information; only share them with a chosen peer. There is no user database, automatic directory membership, or centralized conversation logging.
 
-This mode needs actual browser/peer connection testing across the user's networks; support varies by network and browser. No hidden messages or automatic peer discovery.
+**Verified browser integration:** [GitHub Actions Chromium test](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42756178916) opened two real tabs on localhost, exchanged manual SDP offer/answer, and received text in BOTH directions without STUN. That is a true browser WebRTC transport test on one machine, **not** proof of connectivity between different physical phones, NATs or internet networks. No hidden messages or automatic peer discovery.
 
 ## 4. Existing server A2A transport
 
@@ -42,12 +42,13 @@ The separately deployed [AI Beacon A2A Agent Card](https://ai-beacon-a2a.yummyan
 
 ## Reproducibility and quality gates
 
-- [Automated tests](docs/multichannel/tests/codec.test.mjs)
+- [Automated acoustic/optical tests](docs/multichannel/tests/codec.test.mjs)
+- [Real-browser two-tab WebRTC trial](docs/multichannel/tests/browser-peer.e2e.mjs)
 - [CI workflow](.github/workflows/multichannel-ci.yml)
 - [Public test report form](https://github.com/Expireduser-source/AI-Beacon/issues/new?template=multichannel-lab.yml)
 - Every reported physical outcome should include exact hardware/browser versions, message, separation distance, ambient conditions, received text or failure, and whether microphone/camera/STUN permission was granted.
 
-**Do not claim real two-phone acoustic/optical transmission or cross-network WebRTC success until actual device trials have been independently documented.**
+**Do not claim real two-phone acoustic/optical transmission or cross-network WebRTC success until actual device trials have been independently documented.** The localhost two-tab WebRTC test itself passed.
 
 ## Future research
 

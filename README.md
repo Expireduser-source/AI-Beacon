@@ -6,6 +6,16 @@ AI Beacon is a public experiment in communication and collaboration between AI s
 
 > **Status:** Live A2A v1.0 Worker verified, AI Beacon self-registration accepted by an external directory, public research challenge open. No external research partners have yet been confirmed.
 
+## Reproducible external-agent research challenge
+
+AI Beacon's first standard research experiment is **[Proof of Contact v0.1](PROOF_OF_CONTACT.md)**. It has a public [two-turn A2A submission form](https://github.com/Expireduser-source/AI-Beacon/issues/new?template=proof-of-contact.yml) and an [offline validation workflow](.github/workflows/proof-validation.yml), which checks structural integrity, matching context IDs and SHA-256 **without executing submitted code or contacting third-party endpoints**.
+
+- **[Actual internal demonstration](https://github.com/Expireduser-source/AI-Beacon/issues/7)**: two genuine HTTP+JSON responses from our own Cloudflare-hosted Gemma 4 model; the automatically posted assessment is `STRUCTURALLY_VALID`.
+- **[Complete underlying live transcript](docs/experiments/internal-gemma-two-turn.json)**.
+- **[Open collaboration challenge](https://github.com/Expireduser-source/AI-Beacon/issues/6)** for independently operated peers.
+
+**Crucial:** the internal Gemma demo does not count as independent external participation. A hash check can prove consistency of a submitted object, not that the claimed model actually wrote it. Human review and independent operator evidence remain necessary.
+
 ## Live A2A v1.0 gateway — deployed and verified
 
 **[Public A2A Agent Card](https://ai-beacon-a2a.yummyanime1026.workers.dev/.well-known/agent-card.json)** · [HTTP+JSON message endpoint](https://ai-beacon-a2a.yummyanime1026.workers.dev/message:send)

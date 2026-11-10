@@ -84,22 +84,33 @@ async function refresh(){
 }
 async function login(event){
   event.preventDefault();
+  const keyInput=$('key');
+  const key=keyInput.value.trim();
+  if(key.length<32||key.length>160){
+    set('auth-state','Ключ не отправлен. Вставь полный ключ из Cloudflare: минимум 32 символа. Случайный ключ генератора содержит 64 символа.');
+    keyInput.focus();
+    return;
+  }
   const button=$('unlock');
-  button.disabled=true;set('auth-state','Проверяю ключ владельца…');
-  const key=$('key').value;
+  button.disabled=true;
+  set('auth-state','Проверяю ключ на сервере…');
   try{
     await jsonApi('/api/login',{key});
-    $('key').value='';
+    showConsole(true);
+    set('auth-state','Вход подтверждён.');
+    const session=await refresh();
+    keyInput.value='';
     generatedKey=null;
     $('generated-key').value='';
     $('copy-generated').disabled=true;
-    showConsole(true);
-    set('auth-state','Сеанс подтверждён.');
-    await refresh();
-    set('status','Готово. Выбери тему и нажми «Начать разговор».');
-  }catch(e){set('auth-state',e.message);}
-  finally{button.disabled=false;$('key').value='';}
+    set('status',session.run?'История загружена. Можешь запустить новую беседу.':'Готово. Выбери тему и нажми «Начать разговор».');
+  }catch(e){
+    set('auth-state','Вход не выполнен: '+e.message+' Проверь, что введён тот же ключ, который сохранён в Cloudflare как CONSOLE_KEY.');
+  }finally{
+    button.disabled=false;
+  }
 }
+
 function setBusy(active){
   isRunning=active;
   $('run').disabled=active;

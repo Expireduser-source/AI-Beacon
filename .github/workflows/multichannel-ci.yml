@@ -1,0 +1,33 @@
+name: AI Beacon - multichannel transport tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/multichannel/**'
+      - '.github/workflows/multichannel-ci.yml'
+  pull_request:
+    paths:
+      - 'docs/multichannel/**'
+      - '.github/workflows/multichannel-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check browser and transport module syntax
+        run: |
+          node --check docs/multichannel/codec.mjs
+          node --check docs/multichannel/webrtc.mjs
+          node --check docs/multichannel/browser.mjs
+      - name: Test acoustic waveform receiver, optical framing, CRC and corruption rejection
+        run: node --test docs/multichannel/tests/*.test.mjs

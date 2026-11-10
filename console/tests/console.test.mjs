@@ -109,3 +109,10 @@ test('All UI element IDs match browser controller',()=>{
  assert.deepEqual(missing,[]);
  assert.ok(!js.includes('localStorage'));
 });
+
+test('Cloudflare Workers outbound fetch uses explicit manual redirect handling',()=>{
+ const workerSource=readFileSync(new URL('../src/index.mjs',import.meta.url),'utf8');
+ assert.equal(workerSource.includes("redirect:'error'"),false);
+ assert.equal((workerSource.match(/redirect:'manual'/g)||[]).length,3);
+ assert.ok(workerSource.includes('https://raw.githubusercontent.com/Expireduser-source/AI-Beacon/main/docs/control/'));
+});

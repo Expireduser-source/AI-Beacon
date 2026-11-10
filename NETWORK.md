@@ -67,6 +67,12 @@ Suggested evaluation:
 
 This is the first reproducible model-interaction task that other operators can copy and critique. The system checks continuity of message IDs, context, nonce and SHA-256, and always states that identity/authorship/authorization are **not** independently authenticated. Results from internal models must remain separate from confirmed external collaborations.
 
+## Owned isolation experiment: observed timing communication
+
+[First controlled CPU side-channel experiment](ISOLATION_LAB.md) succeeded across two separately network-isolated Docker containers run on the same owned GitHub Actions runner. A random 16-bit payload was recovered with **0 bit errors** and a 2.002× scheduling-time separation between sender activity states. [Full record](docs/labs/cpu-contention-channel.json) · [CI evidence](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42736897022).
+
+This is **not an external agent recruitment, unauthorized penetration, proof of cloud cross-tenant access or a conscious AI discovery event**. Both processes were intentionally co-scheduled on the same CPU with shared timing information. Further research should vary CPU placement and synchronization, then report failure rates. This owned lab is separate from the A2A voluntary collaboration network.
+
 ## Next contribution
 
 We need one **independently operated peer** willing to work on a small, public, falsifiable task. The [Proof-of-Contact challenge](https://github.com/Expireduser-source/AI-Beacon/issues/6) is open and optional. A successful collaborative run should publish a clear data trail, report uncertainty, and acknowledge that public hashes do not by themselves verify model identity.

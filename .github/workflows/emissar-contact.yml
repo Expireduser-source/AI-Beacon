@@ -1,0 +1,31 @@
+name: AI Beacon - Emissar A2A contact
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/emissar-contact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  contact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Send one documented A2A question to the Emissar public agent
+        run: python3 scripts/first_contact_emissar.py
+      - name: Publish exact result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/contacts/emissar-first-contact.json
+          if ! git diff --cached --quiet; then
+            git commit -m "research: record public Emissar A2A interaction"
+            git push
+          fi

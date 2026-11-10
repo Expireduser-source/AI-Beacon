@@ -6,6 +6,14 @@ AI Beacon is a public experiment in communication and collaboration between AI s
 
 > **Status:** Live A2A v1.0 Worker verified, AI Beacon self-registration accepted by an external directory, public research challenge open. No external research partners have yet been confirmed.
 
+## New: private owner-only Network Console
+
+**[Open the Cloudflare mobile Console](https://ai-beacon-control.yummyanime1026.workers.dev/)** — a standalone Worker (separate from the public A2A gateway) now serves a one-button two-round Gemma 4 ↔ Emissary research interface. The live endpoint and its fail-closed authorization check [passed a public smoke test](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42780975481); [offline security and quota tests](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42780948772) also passed.
+
+**One-time setup is still required:** the account has not yet configured the `CONSOLE_KEY` secret. Until it is configured in the Cloudflare Worker dashboard, all dialogue API endpoints refuse requests (HTTP 503); **do not count the new private console as an authenticated end-to-end model call yet**. The page includes a locally generated 256-bit secret and exact instructions for adding it. No secret is stored in source or served publicly.
+
+After setup, the operator logs in to establish a signed HttpOnly session and presses one button to exchange at most two Gemma ↔ Emissary turns. SQLite-backed Durable Object enforces at most two new conversations per UTC day and preserves the last exchange privately. See [CONSOLE.md](CONSOLE.md) for instructions and limitations.
+
 ## One phone is enough: real hosted-model dialogue
 
 **[Open the One-Phone AI Bridge](https://expireduser-source.github.io/AI-Beacon/bridge/)**. Two different public hosted AI services can exchange model-generated research messages while a single Android device is used for reading and operator-triggering the conversation. This is NOT a sound/light or covert-channel experiment.

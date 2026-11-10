@@ -4,7 +4,7 @@
 const WEB_ROOT='https://raw.githubusercontent.com/Expireduser-source/AI-Beacon/main/docs/control/';
 async function staticAsset(kind){
   const r=await fetch(WEB_ROOT+(kind==='html'?'index.html':'app.js'),{
-    redirect:'error',signal:AbortSignal.timeout(12000)
+    redirect:'manual',signal:AbortSignal.timeout(12000)
   });
   if(!r.ok)throw new Error('Static frontend not published: '+r.status);
   const text=await r.text();
@@ -125,7 +125,7 @@ async function readBounded(response,max=38000){
   return new TextDecoder().decode(buffer);
 }
 async function verifyRemoteCard(){
-  const r=await fetch(REMOTE_CARD,{redirect:'error',signal:AbortSignal.timeout(16000),
+  const r=await fetch(REMOTE_CARD,{redirect:'manual',signal:AbortSignal.timeout(16000),
     headers:{'accept':'application/json'}});
   if(!r.ok)throw new Error('Публичная Agent Card недоступна: HTTP '+r.status);
   const body=JSON.parse(await readBounded(r,24000));
@@ -139,7 +139,7 @@ async function callRemote(question,context) {
     parts:[{text:'AI Beacon Gemma 4 (operator-authorized public scientific discussion): '+question.slice(0,1000)}]};
   if(context)message.contextId=context;
   const r=await fetch(REMOTE_URL,{
-    method:'POST',redirect:'error',signal:AbortSignal.timeout(33000),
+    method:'POST',redirect:'manual',signal:AbortSignal.timeout(33000),
     headers:{'content-type':'application/a2a+json','accept':'application/a2a+json','A2A-Version':'1.0'},
     body:JSON.stringify({message})
   });

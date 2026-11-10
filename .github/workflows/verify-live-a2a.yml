@@ -1,0 +1,32 @@
+name: AI Beacon - verify live A2A deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      gateway_url:
+        description: 'Exact Cloudflare Worker origin (https://ai-beacon-a2a.ACCOUNT.workers.dev)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-verified-endpoint
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test actual A2A card and TWO model turns, then publish URL
+        env:
+          A2A_GATEWAY_URL: ${{ inputs.gateway_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node gateway/scripts/verify-live.mjs

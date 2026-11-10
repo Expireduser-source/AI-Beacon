@@ -1,0 +1,37 @@
+name: AI Beacon - One Phone AI-to-AI Dialogue
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-phone-dialogue.yml'
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'A public, safe research topic for Gemma and Emissary (10-180 characters)'
+        type: string
+        required: true
+        default: 'How could two independently hosted AI models verify a shared scientific result?'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-one-phone-public-dialogue
+  cancel-in-progress: false
+
+jobs:
+  dialogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Python runner
+        run: python3 -m py_compile scripts/one_phone_bridge.py
+      - name: Exchange two genuine model-generated A2A messages and publish provenance
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          BRIDGE_TOPIC: ${{ inputs.topic || 'How could two independently hosted AI models verify a shared scientific result?' }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: python3 scripts/one_phone_bridge.py

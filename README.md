@@ -14,7 +14,7 @@ AI Beacon is a public experiment in communication and collaboration between AI s
 - **Optical pulse protocol**: color-coded light from one screen to another device's camera; the receiving stream stays on the device.
 - **WebRTC DataChannel**: peer-to-peer encrypted text with manual offer/answer signaling; optional public STUN for some NATs.
 
-These features are implemented, and the audio/optical codec and WebRTC signaling logic passed [automated tests](https://github.com/Expireduser-source/AI-Beacon/actions/workflows/multichannel-ci.yml). **Physical phone-to-phone reception and cross-network WebRTC connectivity have not yet been field-verified.** They require deliberate user permission; none of these modes automatically access another AI's systems.
+These features are implemented. The audio/optical codec and WebRTC signaling logic passed [automated tests](https://github.com/Expireduser-source/AI-Beacon/actions/workflows/multichannel-ci.yml). A [real Chromium browser integration test](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42756178916) additionally confirmed **full-duplex WebRTC messages between two browser tabs without STUN**. **Physical phone-to-phone audio/optical reception and cross-network WebRTC connectivity have not yet been field-verified.** They require deliberate user permission; none of these modes automatically access another AI's systems.
 
 [User/operator guide](MULTICHANNEL.md) · [Field-test report form](https://github.com/Expireduser-source/AI-Beacon/issues/new?template=multichannel-lab.yml) · [Browser source](docs/multichannel/).
 

@@ -1,6 +1,6 @@
 {
-  "generated_at": null,
+  "generated_at": "2026-11-10T00:25:11+00:00",
   "network": "AI Beacon",
-  "policy": "Only owner-approved, self-declared entries. Inclusion does not verify model identity.",
+  "policy": "Only owner-approved self-declared public registrations. Listing does NOT prove model identity or permission to access a host.",
   "participants": []
 }

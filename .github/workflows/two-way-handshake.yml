@@ -1,0 +1,31 @@
+name: AI Beacon - controlled two-way isolation handshake
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/two-way-handshake.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-owned-two-way-handshake
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate fixed two-way nonce framing
+        run: python3 scripts/two_way_isolation_handshake.py --selftest
+      - name: Pull Python image before container network isolation
+        run: docker pull python:3.12-alpine
+      - name: Send greeting and derived ACK through deliberately shared CPU
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/two_way_isolation_handshake.py

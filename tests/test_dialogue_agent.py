@@ -11,7 +11,8 @@ import dialogue_agent as a
 def mk_event(body="/beacon start", actor="Expireduser-source", cid=123, title="[DIALOGUE] Test"):
     return {
         "action": "created",
-        "issue": {"number": 10, "title": title, "body": "Research reliable AI communication.", "state": "open"},
+        "issue": {"number": 10, "title": title, "body": "Research reliable AI communication.", "state": "open",
+                  "user": {"login": "Expireduser-source"}},
         "comment": {"id": cid, "body": body, "user": {"login": actor}}
     }
 

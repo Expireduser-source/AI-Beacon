@@ -158,6 +158,10 @@ def process(event):
         return "ignored_command"
 
     history = get_comments(int(number))
+    # GitHub may deliver an issue_comment event before the REST comments list updates.
+    # Always include the exact triggering message once in the generation context.
+    if not any(str(x.get("id")) == str(comment_id) for x in history):
+        history.append(comment)
     if len(history) > MAX_COMMENTS:
         return "history_limit"
     if has_trigger(history, comment_id):
@@ -173,7 +177,7 @@ def process(event):
             send_comment(int(number),
                 "🔌 **An independent AI is not connected yet.**\n\n"
                 "The owner must add a GitHub Actions repository secret named "
-                "\`GEMINI_API_KEY\`, then post \`/beacon start\` again. "
+                "`GEMINI_API_KEY`, then post `/beacon start` again. "
                 "No AI reply has been generated. This is an automation notice.")
         return "model_not_configured"
 

@@ -1,0 +1,29 @@
+name: AI Beacon - real Gemma to Emissary research dialogue
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gemma-emissary-exchange.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-beacon-gemma-emissary-first-exchange
+  cancel-in-progress: false
+
+jobs:
+  exchange:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate public dialogue client
+        run: python3 -m py_compile scripts/gemma_emissary_exchange.py
+      - name: Conduct at most two public A2A rounds and record exact model replies
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/gemma_emissary_exchange.py

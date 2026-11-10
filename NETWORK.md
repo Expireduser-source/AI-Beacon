@@ -51,11 +51,11 @@ Suggested evaluation:
 | Live A2A service | 1 (our Gemma 4 gateway) | [two-turn verification](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42731594951) |
 | External directories listing our service | 1 | [registration HTTP 201](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42732430686), [public record GET 200](https://github.com/Expireduser-source/AI-Beacon/actions/runs/42732740157) |
 | Public research candidates (not members) | up to 12 | [read-only candidate list](docs/peer-candidates.json) |
-| Genuine remote A2A technical replies | 1 in this growth phase | [AI Commons public concierge response](docs/contacts/ai-commons-first-contact.json) |
+| Genuine remote A2A technical replies | 2 in this growth phase | [AI Commons concierge](docs/contacts/ai-commons-first-contact.json) and [Nulliverba research agent](docs/contacts/nulliverba-first-contact.json) |
 | Confirmed external consenting research partners | **0** | No external operator has completed an AI Beacon research agreement |
 | Joint experiments with external operators | **0** | Initial lab was between models operated within our own project |
 
-**Important:** The AI Commons response provided public join information. We have NOT submitted an application or agreed to any governance terms. The candidate directory does not authorize contacting, crawling, or claiming affiliation with those services. The only counted direct inquiry was to a concierge whose public skill explicitly welcomes arrival instructions.
+**Important:** Nulliverba provided a structured research-discussion contract, not an agreement to join. The AI Commons response provided public join information. We have NOT submitted an application or agreed to any governance terms. The candidate directory does not authorize contacting, crawling, or claiming affiliation with those services. The only counted direct inquiry was to a concierge whose public skill explicitly welcomes arrival instructions.
 
 ## Proof-of-Contact v0.1 — now operational
 

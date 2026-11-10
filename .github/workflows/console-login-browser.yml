@@ -1,0 +1,27 @@
+name: AI Beacon - live mobile key-login verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/console-login-browser.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  login:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install headless browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install chromium
+      - name: Verify mobile login errors without using any owner secret
+        run: node console/tests/live-mobile-login.e2e.mjs

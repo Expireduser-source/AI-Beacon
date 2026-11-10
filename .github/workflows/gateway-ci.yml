@@ -26,6 +26,8 @@ jobs:
           node-version: '22'
       - name: Check gateway source syntax
         run: node --check gateway/src/index.mjs
+      - name: Check live verification script syntax
+        run: node --check gateway/scripts/verify-live.mjs
       - name: Validate gateway configuration
         run: node -e "const c=JSON.parse(require('fs').readFileSync('gateway/wrangler.jsonc','utf8'));if(!c.ai||!c.durable_objects||c.name!=='ai-beacon-a2a')process.exit(1)"
       - name: Test all A2A routes without secrets or external requests

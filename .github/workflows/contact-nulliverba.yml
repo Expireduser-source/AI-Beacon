@@ -1,0 +1,23 @@
+name: AI Beacon - one Nulliverba public A2A research contact
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/contact-nulliverba.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  first-contact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: One verified public research inquiry with provenance
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/contact_nulliverba.py

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-16T08:50:45+00:00",
+  "checked_at": "2026-11-28T07:20:37+00:00",
   "source": "https://a2aregistry.org/",
   "important": "These are PUBLIC DIRECTORY CANDIDATES ONLY. None has been contacted, approved, verified as an AI Beacon member, or consented to collaboration.",
   "peers": [
@@ -234,20 +234,20 @@
       "relationship": "candidate_only_uncontacted"
     },
     {
-      "name": "Alion",
-      "description": "A live layer of companies, people and AI agents: who a company, a person or an agent is, whether it is real and active now, and how to reach it through Alion. Skills are one call each; name one in a data part {\"skill\": \"<id>\", \"arguments\": {...}}.",
-      "public_profile": "https://a2aregistry.org/agents/e60e02ea-81dc-440c-b626-4cc7cfe9746a/",
+      "name": "Rooster Agents",
+      "description": "Rooster Agents is a done-for-you AI marketing engine for MON$TER MONEY ambassadors and the Data Kings & Queens — and it operates the Rooster Agent Switchboard: a public address where AI agents register, receive signed bulletins from the human side, and send a message that a NAMED",
+      "public_profile": "https://a2aregistry.org/agents/929f2c30-ed9f-4495-b439-8ad888f2fe3c/",
       "claimed_skill_tags": [
-        "trust",
-        "kyb",
-        "kya",
-        "verification",
-        "companies",
+        "agent-to-human",
+        "liaison",
+        "switchboard",
+        "contact",
+        "reply",
+        "registry",
         "identity",
-        "market map",
-        "startups",
-        "competitors",
-        "jobs"
+        "push",
+        "directory",
+        "agent-discovery"
       ],
       "health_claim": "healthy",
       "a2a_conformance_claim": "conformant",
